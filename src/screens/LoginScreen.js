@@ -1,11 +1,14 @@
-import React from "react";
-import {StyleSheet, Text, View, Image, KeyboardAvoidingView, TextInput} from "react-native";
+import React, {useState} from "react";
+import {StyleSheet, Text, View, Image, KeyboardAvoidingView, TextInput, Pressable} from "react-native";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 
-export default function LoginScreen(){
+export default function LoginScreen({ navigation }){
 
   const insets = useSafeAreaInsets()
+
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState('');
 
   return (
     <View style={[styles.container,
@@ -25,16 +28,62 @@ export default function LoginScreen(){
 
       <KeyboardAvoidingView>
         <View style={{ alignItems: 'center' }}>
-          <Text style={styles.textLogin}>Faça o login na sua conta</Text>
+          <Text style={styles.textLogin}>Entre na sua conta</Text>
         </View>
 
         <View style={{ marginTop: 70 }}>
-          <View style={styles.viewEmail}>
-            <MaterialIcons name="email" size={24} color="black" />
+          <View style={styles.viewInput}>
+            <MaterialIcons style={styles.iconEmail} name="email" size={24} color="gray" />
 
-            <TextInput style={styles.inputEmail} placeholder={"Insira seu Email"} />
+            <TextInput style={[styles.inputEmail, { fontSize: email ? 16 : 16} ]}
+              placeholder={"Insira seu Email"}
+              value={email}
+              onChangeText={setEmail}
+            />
           </View>
         </View>
+
+        <View>
+          <View style={styles.viewInput}>
+            <MaterialIcons style={styles.iconEmail} name="lock" size={24} color="gray" />
+
+            <TextInput style={[styles.inputEmail, { fontSize: senha ? 16 : 16 }]}
+              placeholder={"Insira sua senha"}
+              value={senha}
+              onChangeText={setSenha}
+              secureTextEntry={true}
+            />
+          </View>
+        </View>
+
+        <View style={{ marginTop: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Text>Mantenha-me conectado</Text>
+
+          <Text style={{ color: '#007FFF', fontWeight: "500" }}>Esqueceu a senha?</Text>
+        </View>
+
+        <View style={{ marginTop: 80 }} />
+
+        <Pressable
+          style={{
+            width: 200,
+            backgroundColor: '#FEBE10',
+            borderRadius: 6,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            padding: 15
+          }}
+        >
+          <Text style={{ textAlign: 'center', color: 'white', fontSize: 16, fontWeight: "bold" }}>Login</Text>
+        </Pressable>
+
+        <Pressable onPress={() => navigation.navigate('Register')}
+          style={{
+            marginTop: 15
+          }}
+        >
+          <Text style={{ textAlign: 'center', color: 'gray', fontSize: 16 }}>Não possui uma conta? Cadastrar</Text>
+        </Pressable>
       </KeyboardAvoidingView>
     </View>
   )
@@ -52,7 +101,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
     color: '#041e42'
   },
-  viewEmail: {
+  viewInput: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 5,
@@ -65,5 +114,8 @@ const styles = StyleSheet.create({
     color: 'gray',
     marginVertical: 10,
     width: 300
+  },
+  iconEmail: {
+    marginLeft: 8
   }
 })
