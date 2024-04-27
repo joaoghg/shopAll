@@ -10,6 +10,7 @@ exports.up = function(knex) {
     table.string('password').notNullable()
     table.boolean('verified').defaultTo(false)
     table.string('verificationToken')
+    table.datetime('createdAt').defaultTo(knex.fn.now())
   })
 };
 
