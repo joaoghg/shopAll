@@ -1,6 +1,6 @@
 /**
  * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
+ * @returns { Knex.SchemaBuilder }
  */
 const {Knex} = require("knex");
 exports.up = function(knex) {
@@ -21,7 +21,7 @@ exports.up = function(knex) {
 
 /**
  * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
+ * @returns { Knex.SchemaBuilder }
  */
 exports.down = function(knex) {
   return knex.schema.dropTable('adresses')

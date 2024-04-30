@@ -1,6 +1,6 @@
 /**
  * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
+ * @returns { Knex.SchemaBuilder }
  */
 exports.up = function(knex) {
   knex.schema.createTable('order_products', table => {
@@ -16,7 +16,7 @@ exports.up = function(knex) {
 
 /**
  * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
+ * @returns { Knex.SchemaBuilder }
  */
 exports.down = function(knex) {
   knex.schema.dropTable('order_products')
