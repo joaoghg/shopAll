@@ -20,5 +20,11 @@ exports.up = function(knex) {
  * @returns { Knex.SchemaBuilder }
  */
 exports.down = function(knex) {
-  return knex.schema.dropTable('orders')
+  return knex.schema.alterTable('orders', function(table) {
+    table.dropForeign('userId')
+    table.dropForeign('adressId')
+  })
+  .then(function() {
+    return knex.schema.dropTable('orders')
+  });
 };

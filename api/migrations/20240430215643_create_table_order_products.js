@@ -19,5 +19,11 @@ exports.up = function(knex) {
  * @returns { Knex.SchemaBuilder }
  */
 exports.down = function(knex) {
-  return knex.schema.dropTable('order_products')
+  return knex.schema.alterTable('order_products', function(table) {
+    table.dropForeign('orderId')
+    table.dropForeign('productId')
+  })
+  .then(function() {
+    return knex.schema.dropTable('order_products')
+  });
 };
