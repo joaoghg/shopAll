@@ -4,7 +4,7 @@
  */
 exports.up = function(knex) {
   return knex.schema.createTable('order_products', table => {
-    table.integer('id').primary()
+    table.increments('id').primary()
     table.integer('quantity').notNullable()
     table.decimal('price', 10, 2)
     table.integer('orderId').unsigned().notNullable()
