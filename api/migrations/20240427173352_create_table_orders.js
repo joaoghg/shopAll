@@ -5,13 +5,13 @@
 exports.up = function(knex) {
   knex.schema.createTable('orders', table => {
     table.increments('id').primary()
-    table.integer('userId').references('id')
-      .inTable('users').notNullable()
-    table.integer('adressId').references('id')
-      .inTable('adresses').notNullable()
     table.decimal('totalPrice', 10, 2).notNullable()
     table.string('paymentMethod').notNullable()
     table.datetime('createdAt').defaultTo(knex.fn.now())
+    table.integer('userId').unsigned().notNullable()
+    table.integer('adressId').unsigned().notNullable()
+    table.foreign('userId').references('users.id')
+    table.foreign('adressId').references('adresses.id')
   })
 };
 

@@ -14,8 +14,8 @@ exports.up = function(knex) {
     table.string('city')
     table.string('country')
     table.string('cep')
-    table.integer('userId').references('id')
-      .inTable('users').notNullable()
+    table.integer('userId').unsigned().notNullable()
+    table.foreign('userId').references('users.id')
   })
 };
 
