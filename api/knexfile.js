@@ -3,7 +3,7 @@ module.exports = {
   connection: {
     database: 'shop_all',
     user:     'root',
-    password: 'root'
+    password: ''
   },
   migrations: {
     tableName: 'knex_migrations'
