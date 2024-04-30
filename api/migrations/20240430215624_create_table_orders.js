@@ -3,7 +3,7 @@
  * @returns { Knex.SchemaBuilder }
  */
 exports.up = function(knex) {
-  knex.schema.createTable('orders', table => {
+  return knex.schema.createTable('orders', table => {
     table.increments('id').primary()
     table.decimal('totalPrice', 10, 2).notNullable()
     table.string('paymentMethod').notNullable()
@@ -20,5 +20,5 @@ exports.up = function(knex) {
  * @returns { Knex.SchemaBuilder }
  */
 exports.down = function(knex) {
-  knex.schema.dropTable('orders')
+  return knex.schema.dropTable('orders')
 };
