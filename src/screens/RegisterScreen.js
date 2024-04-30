@@ -80,7 +80,7 @@ export default function RegisterScreen({ navigation }){
             padding: 15
           }}
         >
-          <Text style={{ textAlign: 'center', color: 'white', fontSize: 16, fontWeight: "bold" }}>Login</Text>
+          <Text style={{ textAlign: 'center', color: 'white', fontSize: 16, fontWeight: "bold" }}>Cadastrar</Text>
         </Pressable>
 
         <Pressable onPress={navigation.goBack}
