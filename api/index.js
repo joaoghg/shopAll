@@ -47,6 +47,9 @@ const sendVerificationEmail = async (email, verificationToken) => {
     console.log("Erro enviando o email de verificação", error)
   }
 }
+const generateSecretKey = () => {
+  return crypto.randomBytes(32).toString("hex")
+}
 
 //Início das rotas
 //Rota de registro
@@ -94,5 +97,29 @@ app.get("/verify/:token", async (req, res) => {
     res.status(200).json({message: "Email verificado com sucesso"})
   }catch (error){
     res.status(500).json({message: "Verificação do email falhou"})
+  }
+})
+
+const secretKey = generateSecretKey()
+
+//Rota de login
+app.post("/login", async (req, res) => {
+  try{
+    const {email, password} = req.body
+
+    const user = await db('users').where('email', email).first()
+    if(!user){
+      return res.status(401).json({message: "Credenciais inválidas"})
+    }
+
+    if(user.password !== password){
+      return res.status(401).json({message: "Credenciais inválidas"})
+    }
+
+    const token = jwt.sign({userId: user.id}, secretKey)
+
+    res.status(200).json({token})
+  }catch(error){
+    res.status(500).json({message: "Não foi possível fazer login"})
   }
 })

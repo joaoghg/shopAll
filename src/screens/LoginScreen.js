@@ -1,7 +1,9 @@
 import React, {useState} from "react";
-import {StyleSheet, Text, View, Image, KeyboardAvoidingView, TextInput, Pressable} from "react-native";
+import {StyleSheet, Text, View, Image, KeyboardAvoidingView, TextInput, Pressable, Alert} from "react-native";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function LoginScreen({ navigation }){
 
@@ -9,6 +11,33 @@ export default function LoginScreen({ navigation }){
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState('');
+
+  const handleLogin = () => {
+    if(email === "" || senha === ""){
+      Alert.alert("Atenção", "Informe o email e a senha")
+      return false
+    }
+
+    const user = {
+      email: email,
+      password: senha
+    }
+
+    axios.post("http://192.168.0.117:8000/login", user)
+      .then(response => {
+        const token = response.data.token
+        AsyncStorage.setItem("authToken", token)
+        navigation.replace("Home")
+      })
+      .catch(error => {
+        if(error.response){
+          Alert.alert("Erro no login", error.response.data.message)
+        }
+        else{
+          Alert.alert("Erro no login", "Ocorreu um erro durante o login")
+        }
+      })
+  }
 
   return (
     <View style={[styles.container,
@@ -65,6 +94,7 @@ export default function LoginScreen({ navigation }){
         <View style={{ marginTop: 80 }} />
 
         <Pressable
+          onPress={handleLogin}
           style={{
             width: 200,
             backgroundColor: '#FEBE10',
