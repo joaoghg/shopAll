@@ -1,7 +1,8 @@
 import React, {useState} from "react";
-import {Image, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View} from "react-native";
+import {Alert, Image, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View} from "react-native";
 import {MaterialIcons} from "@expo/vector-icons";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
+import axios from "axios";
 
 export default function RegisterScreen({ navigation }){
 
@@ -10,6 +11,27 @@ export default function RegisterScreen({ navigation }){
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState('');
   const [nome, setNome] = useState('');
+
+  const handleRegister = () => {
+    const user = {
+      name: nome,
+      email: email,
+      password: senha
+    }
+
+    axios.post("http://localhost:8000/register", user)
+      .then(response => {
+        console.log(response)
+        Alert.alert("Cadastro realizado", "Seu cadastro no aplicativo foi concluído!")
+        setNome("")
+        setSenha("")
+        setEmail("")
+      })
+      .catch(error => {
+        Alert.alert("Erro no cadastro", "Ocorreu um erro durante o seu cadastro")
+        console.log("Erro no cadastro", error)
+      })
+  }
 
   return (
     <View style={[styles.container,
@@ -71,6 +93,7 @@ export default function RegisterScreen({ navigation }){
         <View style={{ marginTop: 80 }} />
 
         <Pressable
+          onPress={handleRegister}
           style={{
             width: 200,
             backgroundColor: '#FEBE10',

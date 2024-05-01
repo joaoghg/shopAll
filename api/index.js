@@ -75,3 +75,23 @@ app.post("/register", async (req, res) => {
     res.status(500).json({message: "Erro durante o cadastro"})
   }
 })
+
+//Rota para verificar o email
+app.get("/verify/:token", async (req, res) => {
+  try{
+    const token = req.params.token
+
+    const user = await db('users').where('verificationToken', token).first()
+    if(!user){
+      return res.status(404).json({message: "Token inválido"})
+    }
+
+    db('users')
+      .where('id', user.id)
+      .update({ verified: true, verificationToken: null })
+
+    res.status(200).json({message: "Email verificado com sucesso"})
+  }catch (error){
+    res.status(500).json({message: "Verificação do email falhou"})
+  }
+})
