@@ -21,7 +21,6 @@ export default function RegisterScreen({ navigation }){
 
     axios.post("http://192.168.0.117:8000/register", user)
       .then(response => {
-        console.log(response)
         Alert.alert("Cadastro realizado", "Seu cadastro no aplicativo foi concluído!")
         setNome("")
         setSenha("")
@@ -34,7 +33,6 @@ export default function RegisterScreen({ navigation }){
         else{
           Alert.alert("Erro no cadastro", "Ocorreu um erro durante o seu cadastro")
         }
-        console.log("Erro no cadastro", error)
       })
   }
 

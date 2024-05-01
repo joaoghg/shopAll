@@ -87,7 +87,7 @@ app.get("/verify/:token", async (req, res) => {
       return res.status(404).json({message: "Token inválido"})
     }
 
-    db('users')
+    await db('users')
       .where('id', user.id)
       .update({ verified: true, verificationToken: null })
 
