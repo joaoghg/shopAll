@@ -37,8 +37,8 @@ const sendVerificationEmail = async (email, verificationToken) => {
   const mailOptions = {
     from:"shopAll.com",
     to:email,
-    subject:"Verification de Email",
-    text:`Por favor, clique no link abaixo para verificar seu email : http://localhost:8000/verify/${verificationToken}`
+    subject:"Verificação de Email",
+    text:`Por favor, clique no link abaixo para verificar seu email : http://192.168.0.117:8000/verify/${verificationToken}`
   }
 
   try{
@@ -70,6 +70,7 @@ app.post("/register", async (req, res) => {
       })
 
     sendVerificationEmail(email, verificationToken)
+    res.status(201).json({message: "Usuário cadastrado"})
   }catch(error){
     console.log("Erro cadastrando usuario", error)
     res.status(500).json({message: "Erro durante o cadastro"})

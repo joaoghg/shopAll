@@ -19,7 +19,7 @@ export default function RegisterScreen({ navigation }){
       password: senha
     }
 
-    axios.post("http://localhost:8000/register", user)
+    axios.post("http://192.168.0.117:8000/register", user)
       .then(response => {
         console.log(response)
         Alert.alert("Cadastro realizado", "Seu cadastro no aplicativo foi concluído!")
@@ -28,7 +28,12 @@ export default function RegisterScreen({ navigation }){
         setEmail("")
       })
       .catch(error => {
-        Alert.alert("Erro no cadastro", "Ocorreu um erro durante o seu cadastro")
+        if(error.response){
+          Alert.alert("Erro no cadastro", error.response.data.message)
+        }
+        else{
+          Alert.alert("Erro no cadastro", "Ocorreu um erro durante o seu cadastro")
+        }
         console.log("Erro no cadastro", error)
       })
   }
