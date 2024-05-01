@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {StyleSheet, Text, View, Image, KeyboardAvoidingView, TextInput, Pressable, Alert} from "react-native";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -11,6 +11,23 @@ export default function LoginScreen({ navigation }){
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState('');
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try{
+        const token = await AsyncStorage.getItem('authToken')
+
+        if(token){
+          navigation.replace("Main")
+        }
+      }catch(error){
+        console.log(error)
+      }
+    }
+
+    checkLoginStatus()
+  }, []);
+
 
   const handleLogin = () => {
     if(email === "" || senha === ""){
@@ -27,7 +44,7 @@ export default function LoginScreen({ navigation }){
       .then(response => {
         const token = response.data.token
         AsyncStorage.setItem("authToken", token)
-        navigation.replace("Home")
+        navigation.replace("Main")
       })
       .catch(error => {
         if(error.response){
