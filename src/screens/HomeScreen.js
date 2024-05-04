@@ -309,7 +309,8 @@ export default function HomeScreen({ navigation }){
                   color: item?.color,
                   size: item?.size,
                   oldPrice: item?.oldPrice,
-                  item: item
+                  item: item,
+                  offer: item?.offer
                 })}
                 style={{
                 marginVertical: 10,
@@ -378,7 +379,6 @@ export default function HomeScreen({ navigation }){
             placeholder="Escolha a categoria"
             placeholderStyle={{}}
             onOpen={onGenderOpen}
-            // onChangeValue={onChange}
             zIndex={3000}
             zIndexInverse={1000}
           />
