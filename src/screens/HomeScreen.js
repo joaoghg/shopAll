@@ -259,7 +259,19 @@ export default function HomeScreen({ navigation }){
         }}>
           {deals.map((item, index) => {
             return (
-              <Pressable key={index}
+              <Pressable
+                onPress={() => navigation.navigate("Info", {
+                  id: item.id,
+                  title: item.title,
+                  price: item?.price,
+                  carouselImages: item.carouselImages,
+                  color: item?.color,
+                  size: item?.size,
+                  oldPrice: item?.oldPrice,
+                  item: item,
+                  offer: item?.offer
+                })}
+                key={index}
                 style={{
                 marginVertical: 10,
                 flexDirection: 'row',

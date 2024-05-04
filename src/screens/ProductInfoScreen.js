@@ -50,28 +50,31 @@ export default function ProductInfoScreen(){
                   justifyContent: 'space-between'
                 }}
               >
-                <View
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 20,
-                    backgroundColor: '#C60C30',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    flexDirection: 'row'
-                  }}
-                >
-                  <Text
+                {product?.offer && (
+                  <View
                     style={{
-                      color: 'white',
-                      textAlign: 'center',
-                      fontWeight: '600',
-                      fontSize: 12
+                      width: 40,
+                      height: 40,
+                      borderRadius: 20,
+                      backgroundColor: '#C60C30',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      flexDirection: 'row'
                     }}
                   >
-                    - {product?.offer}
-                  </Text>
-                </View>
+                    <Text
+                      style={{
+                        color: 'white',
+                        textAlign: 'center',
+                        fontWeight: '600',
+                        fontSize: 12
+                      }}
+                    >
+                      - {product?.offer}
+                    </Text>
+                  </View>
+                )}
+
 
                 <View
                   style={{
