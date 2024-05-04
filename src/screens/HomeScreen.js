@@ -1,7 +1,5 @@
 import React, {useState, useEffect, useCallback} from "react";
 import {View, Text, StyleSheet, SafeAreaView, Platform, ScrollView, Pressable, TextInput, Image} from "react-native";
-import { AntDesign } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { SliderBox } from "react-native-image-slider-box";
@@ -9,6 +7,7 @@ import axios from "axios";
 import ProductItem from "../components/ProductItem";
 import DropDownPicker from "react-native-dropdown-picker";
 import MainHeader from "../components/MainHeader";
+import {useSelector} from "react-redux";
 
 export default function HomeScreen({ navigation }){
 
@@ -210,10 +209,7 @@ export default function HomeScreen({ navigation }){
 
   }, []);
 
-  const onGenderOpen = useCallback(() => {
-    setCompanyOpen(false)
-  }, [])
-
+  const cart = useSelector(state => state.cart.cart)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -378,7 +374,6 @@ export default function HomeScreen({ navigation }){
             setItems={setItems}
             placeholder="Escolha a categoria"
             placeholderStyle={{}}
-            onOpen={onGenderOpen}
             zIndex={3000}
             zIndexInverse={1000}
           />
