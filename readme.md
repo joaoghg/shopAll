@@ -1,0 +1,2 @@
+Para configurar o envio de email, crie um arquivo .env seguindo o .env.example e coloque seu email do gmail que será responsável por enviar o email.
+Nas configurações do gmail, habilite a autenticação de 2 fatores e na parte de segurança procure por senhas de apps ou app passwords. Crie uma nova senha para o app NodeMailer (deve ser escrito dessa forma) e depois coloque a senha gerada no arquivo .env também
