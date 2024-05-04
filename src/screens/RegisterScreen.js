@@ -1,10 +1,13 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import {Alert, Image, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View} from "react-native";
 import {MaterialIcons} from "@expo/vector-icons";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import axios from "axios";
+import {AuthContext} from "../contexts/Auth";
 
 export default function RegisterScreen({ navigation }){
+
+  const auth = useContext(AuthContext)
 
   const insets = useSafeAreaInsets()
 
@@ -19,7 +22,7 @@ export default function RegisterScreen({ navigation }){
       password: senha
     }
 
-    axios.post("http://192.168.0.117:8000/register", user)
+    axios.post(`${auth.server}/register`, user)
       .then(response => {
         Alert.alert("Cadastro realizado", "Seu cadastro no aplicativo foi concluído!")
         setNome("")

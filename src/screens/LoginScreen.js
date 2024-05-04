@@ -1,11 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import {StyleSheet, Text, View, Image, KeyboardAvoidingView, TextInput, Pressable, Alert} from "react-native";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {AuthContext} from "../contexts/Auth";
 
 export default function LoginScreen({ navigation }){
+
+  const auth = useContext(AuthContext)
 
   const insets = useSafeAreaInsets()
 
@@ -40,7 +43,7 @@ export default function LoginScreen({ navigation }){
       password: senha
     }
 
-    axios.post("http://192.168.0.117:8000/login", user)
+    axios.post(`${auth.server}/login`, user)
       .then(response => {
         const token = response.data.token
         AsyncStorage.setItem("authToken", token)
