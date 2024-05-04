@@ -1,12 +1,15 @@
-import React from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import {View, Text, StyleSheet, SafeAreaView, Platform, ScrollView, Pressable, TextInput, Image} from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { SliderBox } from "react-native-image-slider-box";
+import axios from "axios";
+import ProductItem from "../components/ProductItem";
+import DropDownPicker from "react-native-dropdown-picker";
 
-export default function HomeScreen(){
+export default function HomeScreen({ navigation }){
 
   const list = [
     {
@@ -181,6 +184,36 @@ export default function HomeScreen(){
     },
   ]
 
+  const [products, setProducts] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [category, setCategory] = useState("jewelery");
+  const [items, setItems] = useState([
+    { label: "Men's clothing", value: "men's clothing" },
+    { label: "jewelery", value: "jewelery" },
+    { label: "electronics", value: "electronics" },
+    { label: "women's clothing", value: "women's clothing" },
+  ]);
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      try{
+        const response = await axios.get('https://fakestoreapi.com/products')
+        setProducts(response.data)
+      }catch(error){
+        console.log("Erro", error)
+      }
+    }
+
+    fetchData()
+
+  }, []);
+
+  const onGenderOpen = useCallback(() => {
+    setCompanyOpen(false)
+  }, [])
+
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -236,7 +269,8 @@ export default function HomeScreen(){
         }}>
           {deals.map((item, index) => {
             return (
-              <Pressable style={{
+              <Pressable key={index}
+                style={{
                 marginVertical: 10,
                 flexDirection: 'row',
                 alignItems: 'center'
@@ -272,7 +306,8 @@ export default function HomeScreen(){
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           {offers.map((item, index) => {
             return (
-              <Pressable style={{
+              <Pressable key={index}
+                style={{
                 marginVertical: 10,
                 alignItems: 'center',
                 justifyContent: 'center'
@@ -316,6 +351,44 @@ export default function HomeScreen(){
           marginTop: 15
         }} />
 
+        <View
+          style={{
+            marginHorizontal: 10,
+            marginTop: 20,
+            width: "45%",
+            marginBottom: open ? 50 : 15,
+          }}
+        >
+          <DropDownPicker
+            style={{
+              borderColor: "#B7B7B7",
+              height: 30,
+              marginBottom: open ? 120 : 15,
+            }}
+            open={open}
+            value={category}
+            items={items}
+            setOpen={setOpen}
+            setValue={setCategory}
+            setItems={setItems}
+            placeholder="Escolha a categoria"
+            placeholderStyle={{}}
+            onOpen={onGenderOpen}
+            // onChangeValue={onChange}
+            zIndex={3000}
+            zIndexInverse={1000}
+          />
+        </View>
+
+        <View style={styles.productsView}>
+          {products?.filter((item) => item.category === category)
+            .map((item, index) => {
+              return (
+                <ProductItem item={item} key={index} />
+              )
+          })}
+        </View>
+
       </ScrollView>
     </SafeAreaView>
   )
@@ -353,5 +426,10 @@ const styles = StyleSheet.create({
   locationText: {
     fontSize: 15,
     fontWeight: "500"
+  },
+  productsView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap'
   }
 })
