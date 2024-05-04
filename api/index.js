@@ -4,6 +4,7 @@ const db = require("./config/db")
 const crypto = require("crypto")
 const nodemailer = require("nodemailer")
 const cors = require("cors")
+require('dotenv').config();
 
 const app = express()
 const port = 8000
@@ -29,8 +30,8 @@ const sendVerificationEmail = async (email, verificationToken) => {
   const transporter = nodemailer.createTransport({
     service:"gmail",
     auth: {
-      user:"jherreiragarnica2@gmail.com",
-      pass:"hhqaozecxehkgdwq"
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
     }
   })
 
