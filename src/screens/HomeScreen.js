@@ -8,6 +8,7 @@ import { SliderBox } from "react-native-image-slider-box";
 import axios from "axios";
 import ProductItem from "../components/ProductItem";
 import DropDownPicker from "react-native-dropdown-picker";
+import MainHeader from "../components/MainHeader";
 
 export default function HomeScreen({ navigation }){
 
@@ -217,14 +218,7 @@ export default function HomeScreen({ navigation }){
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <View style={styles.viewPesquisar}>
-          <Pressable style={styles.btnPesquisar}>
-            <AntDesign name="search1" size={22} color="black" style={{ paddingLeft: 10 }} />
-            <TextInput placeholder={"Pesquisar"} />
-          </Pressable>
-
-          <Feather name="mic" size={24} color="black" />
-        </View>
+        <MainHeader />
 
         <View style={styles.locationView}>
           <Ionicons name="location-outline" size={24} color="black" />
@@ -409,22 +403,6 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'android' ? 40 : 0,
     flex: 1,
     backgroundColor: 'white'
-  },
-  viewPesquisar: {
-    backgroundColor: '#00ced1',
-    padding: 10,
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  btnPesquisar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: 7,
-    gap: 10,
-    backgroundColor: 'white',
-    borderRadius: 3,
-    height: 38,
-    flex: 1
   },
   locationView: {
     flexDirection: 'row',
