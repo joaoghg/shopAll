@@ -1,7 +1,6 @@
-import React, {useState, useEffect, useCallback} from "react";
+import React, {useState, useEffect } from "react";
 import {View, Text, StyleSheet, SafeAreaView, Platform, ScrollView, Pressable, TextInput, Image} from "react-native";
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, Entypo, Ionicons } from '@expo/vector-icons';
 import { SliderBox } from "react-native-image-slider-box";
 import axios from "axios";
 import ProductItem from "../components/ProductItem";
@@ -429,8 +428,62 @@ export default function HomeScreen({ navigation }){
             height: 400
           }}
         >
-          <View>
-            <Text>Selecione o endereço</Text>
+          <View
+            style={{
+              marginBottom: 8
+            }}
+          >
+            <Text style={{ fontSize: 16, fontWeight: "500" }}>Selecione o endereço</Text>
+          </View>
+
+          <ScrollView
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          >
+            <Pressable
+              style={{
+                width: 140,
+                height: 140,
+                borderColor: "#D0D0D0",
+                marginTop: 10,
+                borderWidth: 1,
+                padding: 10,
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+              <Text style={{ textAlign: 'center', color: '#0066b2', fontWeight: "500" }}>Adicionar endereço</Text>
+            </Pressable>
+          </ScrollView>
+
+          <View
+            style={{
+              flexDirection: "column",
+              gap: 7,
+              marginBottom: 30
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 5
+              }}
+            >
+              <Entypo name="location-pin" size={24} color="#0066b2" />
+              <Text style={{ color: '#0066b2', fontWeight: "400" }}>Informe o CEP</Text>
+            </View>
+
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 5
+              }}
+            >
+              <Ionicons name="locate-sharp" size={24} color="#0066b2" />
+              <Text style={{ color: '#0066b2', fontWeight: "400" }}>Usar localização atual</Text>
+            </View>
           </View>
         </ModalContent>
       </BottomModal>
