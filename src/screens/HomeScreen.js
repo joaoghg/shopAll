@@ -8,6 +8,7 @@ import ProductItem from "../components/ProductItem";
 import DropDownPicker from "react-native-dropdown-picker";
 import MainHeader from "../components/MainHeader";
 import {useSelector} from "react-redux";
+import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
 
 export default function HomeScreen({ navigation }){
 
@@ -210,198 +211,230 @@ export default function HomeScreen({ navigation }){
   }, []);
 
   const cart = useSelector(state => state.cart.cart)
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <MainHeader />
+    <>
+      <SafeAreaView style={styles.container}>
+        <ScrollView>
 
-        <View style={styles.locationView}>
-          <Ionicons name="location-outline" size={24} color="black" />
+          <MainHeader />
 
-          <Pressable>
-            <Text style={styles.locationText}>Enviar para João - Pederneiras 17284066</Text>
+          <Pressable
+            onPress={() => setModalVisible(!modalVisible)}
+            style={styles.locationView}
+          >
+            <Ionicons name="location-outline" size={24} color="black" />
+
+            <Pressable>
+              <Text style={styles.locationText}>Enviar para João - Pederneiras 17284066</Text>
+            </Pressable>
+
+            <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
           </Pressable>
 
-          <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
-        </View>
-
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {list.map((item, index) => {
-            return (
-              <Pressable key={index}
-                style={{
-                  margin: 10,
-                  justifyContent: 'center'
-                }}
-              >
-                <Image source={{uri: item.image}}
-                  style={{width: 50, height: 50, resizeMode: 'contain'}}
-                />
-
-                <Text style={{ textAlign: 'center', fontSize: 12, fontWeight: "500", marginTop: 5 }}>{item?.name}</Text>
-              </Pressable>
-            )
-          })}
-        </ScrollView>
-
-        <SliderBox images={images} autoPlay circleLoop
-          dotColor={"#13274F"} inactiveDotColor="#90A4AE"
-          ImageComponentStyle={{width: '100%'}}
-        />
-
-        <Text style={{ padding:10, fontSize:18, fontWeight:"bold" }}>Ofertas da semana</Text>
-
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          flexWrap: 'wrap'
-        }}>
-          {deals.map((item, index) => {
-            return (
-              <Pressable
-                onPress={() => navigation.navigate("Info", {
-                  id: item.id,
-                  title: item.title,
-                  price: item?.price,
-                  carouselImages: item.carouselImages,
-                  color: item?.color,
-                  size: item?.size,
-                  oldPrice: item?.oldPrice,
-                  item: item,
-                  offer: item?.offer
-                })}
-                key={index}
-                style={{
-                marginVertical: 10,
-                flexDirection: 'row',
-                alignItems: 'center'
-              }}>
-                <Image
-                  source={{uri:item?.image}}
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            {list.map((item, index) => {
+              return (
+                <Pressable key={index}
                   style={{
-                    width:180,
-                    height: 180,
-                    resizeMode: "contain"
+                    margin: 10,
+                    justifyContent: 'center'
                   }}
-                />
-              </Pressable>
-            )
-          })}
-        </View>
+                >
+                  <Image source={{uri: item.image}}
+                    style={{width: 50, height: 50, resizeMode: 'contain'}}
+                  />
 
-        <Text style={{
-          height: 1,
-          borderColor: "#D0D0D0",
-          borderWidth: 2,
-          marginTop: 15
-        }} />
+                  <Text style={{ textAlign: 'center', fontSize: 12, fontWeight: "500", marginTop: 5 }}>{item?.name}</Text>
+                </Pressable>
+              )
+            })}
+          </ScrollView>
 
-        <Text style={{
-          padding: 10,
-          fontSize: 18,
-          fontWeight: "bold"
-        }}>
-          Ofertas do dia
-        </Text>
+          <SliderBox images={images} autoPlay circleLoop
+            dotColor={"#13274F"} inactiveDotColor="#90A4AE"
+            ImageComponentStyle={{width: '100%'}}
+          />
 
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {offers.map((item, index) => {
-            return (
-              <Pressable key={index}
-                onPress={() => navigation.navigate("Info", {
-                  id: item.id,
-                  title: item.title,
-                  price: item?.price,
-                  carouselImages: item.carouselImages,
-                  color: item?.color,
-                  size: item?.size,
-                  oldPrice: item?.oldPrice,
-                  item: item,
-                  offer: item?.offer
-                })}
-                style={{
-                marginVertical: 10,
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                <Image
-                  source={{uri: item?.image}}
+          <Text style={{ padding:10, fontSize:18, fontWeight:"bold" }}>Ofertas da semana</Text>
+
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            flexWrap: 'wrap'
+          }}>
+            {deals.map((item, index) => {
+              return (
+                <Pressable
+                  onPress={() => navigation.navigate("Info", {
+                    id: item.id,
+                    title: item.title,
+                    price: item?.price,
+                    carouselImages: item.carouselImages,
+                    color: item?.color,
+                    size: item?.size,
+                    oldPrice: item?.oldPrice,
+                    item: item,
+                    offer: item?.offer
+                  })}
+                  key={index}
                   style={{
-                    width: 150,
-                    height: 150,
-                    resizeMode: 'contain'
-                  }}
-                />
-
-                <View style={{
-                  backgroundColor: '#E31837',
-                  paddingVertical: 5,
-                  width: 130,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginTop: 10,
-                  borderRadius: 4
+                  marginVertical: 10,
+                  flexDirection: 'row',
+                  alignItems: 'center'
                 }}>
-                  <Text style={{
-                    textAlign: 'center',
-                    color: 'white',
-                    fontSize: 13,
-                    fontWeight: 'bold'
+                  <Image
+                    source={{uri:item?.image}}
+                    style={{
+                      width:180,
+                      height: 180,
+                      resizeMode: "contain"
+                    }}
+                  />
+                </Pressable>
+              )
+            })}
+          </View>
+
+          <Text style={{
+            height: 1,
+            borderColor: "#D0D0D0",
+            borderWidth: 2,
+            marginTop: 15
+          }} />
+
+          <Text style={{
+            padding: 10,
+            fontSize: 18,
+            fontWeight: "bold"
+          }}>
+            Ofertas do dia
+          </Text>
+
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            {offers.map((item, index) => {
+              return (
+                <Pressable key={index}
+                  onPress={() => navigation.navigate("Info", {
+                    id: item.id,
+                    title: item.title,
+                    price: item?.price,
+                    carouselImages: item.carouselImages,
+                    color: item?.color,
+                    size: item?.size,
+                    oldPrice: item?.oldPrice,
+                    item: item,
+                    offer: item?.offer
+                  })}
+                  style={{
+                  marginVertical: 10,
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <Image
+                    source={{uri: item?.image}}
+                    style={{
+                      width: 150,
+                      height: 150,
+                      resizeMode: 'contain'
+                    }}
+                  />
+
+                  <View style={{
+                    backgroundColor: '#E31837',
+                    paddingVertical: 5,
+                    width: 130,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: 10,
+                    borderRadius: 4
                   }}>
-                    {item?.offer} de desconto
-                  </Text>
-                </View>
-              </Pressable>
-            )
-          })}
+                    <Text style={{
+                      textAlign: 'center',
+                      color: 'white',
+                      fontSize: 13,
+                      fontWeight: 'bold'
+                    }}>
+                      {item?.offer} de desconto
+                    </Text>
+                  </View>
+                </Pressable>
+              )
+            })}
+          </ScrollView>
+
+          <Text style={{
+            height: 1,
+            borderColor: "#D0D0D0",
+            borderWidth: 2,
+            marginTop: 15
+          }} />
+
+          <View
+            style={{
+              marginHorizontal: 10,
+              marginTop: 20,
+              width: "45%",
+              marginBottom: open ? 50 : 15,
+            }}
+          >
+            <DropDownPicker
+              style={{
+                borderColor: "#B7B7B7",
+                height: 30,
+                marginBottom: open ? 120 : 15,
+              }}
+              open={open}
+              value={category}
+              items={items}
+              setOpen={setOpen}
+              setValue={setCategory}
+              setItems={setItems}
+              placeholder="Escolha a categoria"
+              placeholderStyle={{}}
+              zIndex={3000}
+              zIndexInverse={1000}
+            />
+          </View>
+
+          <View style={styles.productsView}>
+            {products?.filter((item) => item.category === category)
+              .map((item, index) => {
+                return (
+                  <ProductItem item={item} key={index} />
+                )
+            })}
+          </View>
+
         </ScrollView>
+      </SafeAreaView>
 
-        <Text style={{
-          height: 1,
-          borderColor: "#D0D0D0",
-          borderWidth: 2,
-          marginTop: 15
-        }} />
-
-        <View
+      <BottomModal
+        onBackdropPress={() => setModalVisible(!modalVisible)}
+        swipeDirection={["up", "down"]}
+        swipeThreshold={200}
+        modalAnimation={
+          new SlideAnimation({
+            slideFrom: 'bottom'
+          })
+        }
+        onHardwareBackPress={() => setModalVisible(!modalVisible)}
+        visible={modalVisible}
+        onTouchOutside={() => setModalVisible(!modalVisible)}
+      >
+        <ModalContent
           style={{
-            marginHorizontal: 10,
-            marginTop: 20,
-            width: "45%",
-            marginBottom: open ? 50 : 15,
+            width: '100%',
+            height: 400
           }}
         >
-          <DropDownPicker
-            style={{
-              borderColor: "#B7B7B7",
-              height: 30,
-              marginBottom: open ? 120 : 15,
-            }}
-            open={open}
-            value={category}
-            items={items}
-            setOpen={setOpen}
-            setValue={setCategory}
-            setItems={setItems}
-            placeholder="Escolha a categoria"
-            placeholderStyle={{}}
-            zIndex={3000}
-            zIndexInverse={1000}
-          />
-        </View>
-
-        <View style={styles.productsView}>
-          {products?.filter((item) => item.category === category)
-            .map((item, index) => {
-              return (
-                <ProductItem item={item} key={index} />
-              )
-          })}
-        </View>
-
-      </ScrollView>
-    </SafeAreaView>
+          <View>
+            <Text>Selecione o endereço</Text>
+          </View>
+        </ModalContent>
+      </BottomModal>
+    </>
   )
 }
 
