@@ -441,6 +441,10 @@ export default function HomeScreen({ navigation }){
             showsHorizontalScrollIndicator={false}
           >
             <Pressable
+              onPress={() => {
+                setModalVisible(false)
+                navigation.navigate("Address")
+              }}
               style={{
                 width: 140,
                 height: 140,
@@ -460,7 +464,7 @@ export default function HomeScreen({ navigation }){
             style={{
               flexDirection: "column",
               gap: 7,
-              marginBottom: 30
+              marginBottom: 10
             }}
           >
             <View
@@ -470,7 +474,7 @@ export default function HomeScreen({ navigation }){
                 gap: 5
               }}
             >
-              <Entypo name="location-pin" size={24} color="#0066b2" />
+              <Entypo name="location-pin" size={22} color="#0066b2" />
               <Text style={{ color: '#0066b2', fontWeight: "400" }}>Informe o CEP</Text>
             </View>
 
@@ -481,7 +485,7 @@ export default function HomeScreen({ navigation }){
                 gap: 5
               }}
             >
-              <Ionicons name="locate-sharp" size={24} color="#0066b2" />
+              <Ionicons name="locate-sharp" size={22} color="#0066b2" />
               <Text style={{ color: '#0066b2', fontWeight: "400" }}>Usar localização atual</Text>
             </View>
           </View>
