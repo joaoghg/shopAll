@@ -9,9 +9,9 @@ exports.up = function(knex) {
     table.string('paymentMethod').notNullable()
     table.datetime('createdAt').defaultTo(knex.fn.now())
     table.integer('userId').unsigned().notNullable()
-    table.integer('adressId').unsigned().notNullable()
+    table.integer('addressId').unsigned().notNullable()
     table.foreign('userId').references('users.id')
-    table.foreign('adressId').references('adresses.id')
+    table.foreign('addressId').references('addresses.id')
   })
 };
 

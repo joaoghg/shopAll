@@ -4,7 +4,7 @@
  */
 const {Knex} = require("knex");
 exports.up = function(knex) {
-  return knex.schema.createTable('adresses', table => {
+  return knex.schema.createTable('addresses', table => {
     table.increments('id').primary()
     table.string('name')
     table.string('mobileNumber')
