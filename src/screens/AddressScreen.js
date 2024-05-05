@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import {View, StyleSheet, Text, ScrollView, Platform, TextInput, Pressable} from "react-native";
 
 export default function AddressScreen(){
+
+  const [name, setName] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [houseNumber, setHouseNumber] = useState("");
+  const [street, setStreet] = useState("");
+  const [landmark, setLandmark] = useState("");
+  const [cep, setCep] = useState("");
+
   return (
     <ScrollView
       style={{
@@ -29,6 +37,8 @@ export default function AddressScreen(){
           <Text style={{fontSize: 15,fontWeight: 'bold'}}>Nome completo</Text>
 
           <TextInput
+            value={name}
+            onChangeText={setName}
             placeholder={"Nome"}
             placeholderTextColor={"black"}
             style={styles.input}
@@ -39,6 +49,8 @@ export default function AddressScreen(){
           <Text style={{fontSize: 15,fontWeight: 'bold'}}>Celular</Text>
 
           <TextInput
+            value={mobileNumber}
+            onChangeText={setMobileNumber}
             placeholder={"Informe o número"}
             placeholderTextColor={"black"}
             style={styles.input}
@@ -53,6 +65,8 @@ export default function AddressScreen(){
           <Text style={{fontSize: 15,fontWeight: 'bold'}}>Telefone</Text>
 
           <TextInput
+            value={houseNumber}
+            onChangeText={setHouseNumber}
             placeholder={"Informe o número"}
             placeholderTextColor={"black"}
             style={styles.input}
@@ -63,6 +77,8 @@ export default function AddressScreen(){
           <Text style={{fontSize: 15,fontWeight: 'bold'}}>CEP</Text>
 
           <TextInput
+            value={cep}
+            onChangeText={setCep}
             style={styles.input}
           />
         </View>
@@ -75,6 +91,8 @@ export default function AddressScreen(){
           <Text style={{fontSize: 15,fontWeight: 'bold'}}>Rua</Text>
 
           <TextInput
+            value={street}
+            onChangeText={setStreet}
             style={styles.input}
           />
         </View>
@@ -87,12 +105,23 @@ export default function AddressScreen(){
           <Text style={{fontSize: 15,fontWeight: 'bold'}}>Complemento</Text>
 
           <TextInput
+            value={landmark}
+            onChangeText={setLandmark}
             style={styles.input}
           />
         </View>
 
-        <Pressable>
-
+        <Pressable
+          style={{
+            backgroundColor: '#FFC72C',
+            padding: 19,
+            borderRadius: 6,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 20
+          }}
+        >
+          <Text style={{fontWeight: 'bold'}}>Adicionar</Text>
         </Pressable>
 
       </View>

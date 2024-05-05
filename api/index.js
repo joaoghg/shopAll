@@ -124,3 +124,41 @@ app.post("/login", async (req, res) => {
     res.status(500).json({message: "Não foi possível fazer login"})
   }
 })
+
+//Rota para salvar endereço
+app.post("/addressess", async (req, res) => {
+  try{
+    const { userId, address } = req.body
+
+    const user = await db('users').where('id', userId).first()
+    if(!user){
+      return res.status(404).json({message: "Usuário não encontrado"})
+    }
+
+    await db('addresses')
+      .insert(address)
+
+    res.status(201).json({ message: "Endereço adicionado" })
+  }catch(error){
+    res.status(500).json({ message: "Erro adicionando endereço" })
+  }
+})
+
+//Rota para buscar endereços
+app.get("/adresses/:userId", async (req, res) => {
+  try{
+    const userId = req.params.userId
+
+    const user = await db('users').where('id', userId).first()
+    if(!user){
+      return res.status(404).json({message: "Usuário não encontrado"})
+    }
+
+    const addresses = await db('addresses')
+      .where('userId', userId)
+
+    res.status(200).json({addresses})
+  }catch(error){
+    res.status(500).json({ message: "Erro buscando endereços" })
+  }
+})
