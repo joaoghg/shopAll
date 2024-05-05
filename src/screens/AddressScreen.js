@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {View, StyleSheet, Text, ScrollView, Platform, TextInput, Pressable} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { jwtDecode } from "jwt-decode";
+import {UserType} from "../contexts/UserContext";
 
 export default function AddressScreen(){
 
@@ -10,6 +13,23 @@ export default function AddressScreen(){
   const [landmark, setLandmark] = useState("");
   const [cep, setCep] = useState("");
 
+  const { userId, setUserId } = useContext(UserType);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = await AsyncStorage.getItem('authToken')
+      const decodedToken = jwtDecode(token)
+      console.log(decodedToken)
+      /*const userId = decodedToken.userId
+      setUserId(userId)*/
+    }
+
+    fetchUser()
+  }, [])
+
+  const handleAddAddress = () => {
+
+  }
   return (
     <ScrollView
       style={{
@@ -112,6 +132,7 @@ export default function AddressScreen(){
         </View>
 
         <Pressable
+          onPress={handleAddAddress}
           style={{
             backgroundColor: '#FFC72C',
             padding: 19,
