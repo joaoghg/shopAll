@@ -3,6 +3,7 @@ import {View, StyleSheet, Text, ScrollView, Platform, TextInput, Pressable} from
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { jwtDecode } from "jwt-decode";
 import {UserType} from "../contexts/UserContext";
+import "core-js/stable/atob";
 
 export default function AddressScreen(){
 
@@ -19,9 +20,8 @@ export default function AddressScreen(){
     const fetchUser = async () => {
       const token = await AsyncStorage.getItem('authToken')
       const decodedToken = jwtDecode(token)
-      console.log(decodedToken)
-      /*const userId = decodedToken.userId
-      setUserId(userId)*/
+      const userId = decodedToken.userId
+      setUserId(userId)
     }
 
     fetchUser()
