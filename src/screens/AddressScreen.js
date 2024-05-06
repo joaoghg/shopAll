@@ -1,11 +1,13 @@
 import React, {useContext, useEffect, useState} from "react";
-import {View, StyleSheet, Text, ScrollView, Platform, TextInput, Pressable} from "react-native";
+import {View, StyleSheet, Text, ScrollView, Platform, TextInput, Pressable, Alert} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { jwtDecode } from "jwt-decode";
 import {UserType} from "../contexts/UserContext";
 import "core-js/stable/atob";
+import axios from "axios";
+import {AuthContext} from "../contexts/Auth";
 
-export default function AddressScreen(){
+export default function AddressScreen({ navigation }){
 
   const [name, setName] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
@@ -15,6 +17,7 @@ export default function AddressScreen(){
   const [cep, setCep] = useState("");
 
   const { userId, setUserId } = useContext(UserType);
+  const { server } = useContext(AuthContext)
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -28,8 +31,41 @@ export default function AddressScreen(){
   }, [])
 
   const handleAddAddress = () => {
+    const address = {
+      name,
+      mobileNumber,
+      houseNumber,
+      street,
+      landmark,
+      cep,
+      userId
+    }
 
+    axios.post(`${server}/addresses`, {userId, address})
+      .then(response => {
+        Alert.alert("Sucesso", "Endereço adicionado")
+        setName("")
+        setMobileNumber("")
+        setHouseNumber("")
+        setStreet("")
+        setLandmark("")
+        setCep("")
+
+        setTimeout(() => {
+          navigation.goBack()
+        }, 500)
+      })
+      .catch(error => {
+        if(error.response){
+          Alert.alert("Erro", error.response.data.message)
+        }
+        else{
+          Alert.alert("Erro", "Não foi possível salvar o endereço")
+        }
+        console.log("erro", error)
+      })
   }
+
   return (
     <ScrollView
       style={{

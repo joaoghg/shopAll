@@ -126,7 +126,7 @@ app.post("/login", async (req, res) => {
 })
 
 //Rota para salvar endereço
-app.post("/addressess", async (req, res) => {
+app.post("/addresses", async (req, res) => {
   try{
     const { userId, address } = req.body
 
