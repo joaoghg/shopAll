@@ -11,6 +11,7 @@ import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {UserType} from "../contexts/UserContext";
 import {AuthContext} from "../contexts/Auth";
+import { jwtDecode } from "jwt-decode";
 
 export default function HomeScreen({ navigation }){
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import {View, StyleSheet, Text, ScrollView, Platform, Pressable} from "react-native";
 import MainHeader from "../components/MainHeader";
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, Entypo } from '@expo/vector-icons';
 import axios from "axios";
 import {AuthContext} from "../contexts/Auth";
 import {UserType} from "../contexts/UserContext";
@@ -64,7 +64,89 @@ export default function AddAddressScreen({ navigation }){
         </Pressable>
 
         <Pressable>
+          {addresses?.map((item, index) => {
+            return (
+              <Pressable
+                key={index}
+                style={{
+                  borderWidth: 1,
+                  borderColor: '#D0D0D0',
+                  padding: 10,
+                  flexDirection: 'column',
+                  gap: 5,
+                  marginVertical: 10
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 3
+                  }}
+                >
+                  <Text style={{fontSize: 15, fontWeight: 'bold'}}>{item?.name}</Text>
+                  <Entypo name="location-pin" size={24} color={'red'} />
+                </View>
 
+                <Text style={{fontSize: 15, color: '#181818'}}>{item?.houseNumber} {item?.landmark}</Text>
+
+                <Text style={{fontSize: 15, color: '#181818'}}>{item?.street}</Text>
+
+                <Text style={{fontSize: 15, color: '#181818'}}>Brasil, Pederneiras</Text>
+
+                <Text style={{fontSize: 15, color: '#181818'}}>Celular {item?.mobileNumber}</Text>
+                <Text style={{fontSize: 15, color: '#181818'}}>CEP: {item?.cep}</Text>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 10,
+                    marginTop: 7
+                  }}
+                >
+                  <Pressable
+                    style={{
+                      backgroundColor: '#F5F5F5',
+                      paddingHorizontal: 10,
+                      paddingVertical: 6,
+                      borderRadius: 5,
+                      borderWidth: 0.9,
+                      borderColor: '#D0D0D0'
+                    }}
+                  >
+                    <Text>Editar</Text>
+                  </Pressable>
+
+                  <Pressable
+                    style={{
+                      backgroundColor: '#F5F5F5',
+                      paddingHorizontal: 10,
+                      paddingVertical: 6,
+                      borderRadius: 5,
+                      borderWidth: 0.9,
+                      borderColor: '#D0D0D0'
+                    }}
+                  >
+                    <Text>Excluir</Text>
+                  </Pressable>
+
+                  <Pressable
+                    style={{
+                      backgroundColor: '#F5F5F5',
+                      paddingHorizontal: 10,
+                      paddingVertical: 6,
+                      borderRadius: 5,
+                      borderWidth: 0.9,
+                      borderColor: '#D0D0D0'
+                    }}
+                  >
+                    <Text>Definir como padrão</Text>
+                  </Pressable>
+                </View>
+              </Pressable>
+            )
+          })}
         </Pressable>
       </View>
     </ScrollView>
