@@ -145,7 +145,7 @@ app.post("/addresses", async (req, res) => {
 })
 
 //Rota para buscar endereços
-app.get("/adresses/:userId", async (req, res) => {
+app.get("/addresses/:userId", async (req, res) => {
   try{
     const userId = req.params.userId
 

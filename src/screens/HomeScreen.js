@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from "react";
+import React, {useState, useEffect, useContext } from "react";
 import {View, Text, StyleSheet, SafeAreaView, Platform, ScrollView, Pressable, TextInput, Image} from "react-native";
 import { MaterialIcons, Entypo, Ionicons } from '@expo/vector-icons';
 import { SliderBox } from "react-native-image-slider-box";
@@ -8,8 +8,14 @@ import DropDownPicker from "react-native-dropdown-picker";
 import MainHeader from "../components/MainHeader";
 import {useSelector} from "react-redux";
 import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {UserType} from "../contexts/UserContext";
+import {AuthContext} from "../contexts/Auth";
 
 export default function HomeScreen({ navigation }){
+
+  const { server } = useContext(AuthContext)
+  const { userId, setUserId } = useContext(UserType);
 
   const list = [
     {
@@ -186,6 +192,7 @@ export default function HomeScreen({ navigation }){
 
   const [products, setProducts] = useState([]);
   const [open, setOpen] = useState(false);
+  const [addresses, setAddresses] = useState([])
   const [category, setCategory] = useState("jewelery");
   const [items, setItems] = useState([
     { label: "Men's clothing", value: "men's clothing" },
@@ -211,6 +218,34 @@ export default function HomeScreen({ navigation }){
 
   const cart = useSelector(state => state.cart.cart)
   const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    if(userId){
+      fetchAddresses()
+    }
+  }, [userId, modalVisible])
+
+  const fetchAddresses = async () => {
+    try{
+      const response = await axios.get(`${server}/addresses/${userId}`)
+      const { addresses } = response.data
+
+      setAddresses(addresses)
+    }catch(error){
+      console.log("erro", error)
+    }
+  }
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = await AsyncStorage.getItem('authToken')
+      const decodedToken = jwtDecode(token)
+      const userId = decodedToken.userId
+      setUserId(userId)
+    }
+
+    fetchUser()
+  }, [])
 
   return (
     <>
