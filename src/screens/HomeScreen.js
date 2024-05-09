@@ -195,6 +195,7 @@ export default function HomeScreen({ navigation }){
   const [open, setOpen] = useState(false);
   const [addresses, setAddresses] = useState([])
   const [category, setCategory] = useState("jewelery");
+  const [selectedAddress, setSelectedAddress] = useState("")
   const [items, setItems] = useState([
     { label: "Men's clothing", value: "men's clothing" },
     { label: "jewelery", value: "jewelery" },
@@ -262,7 +263,11 @@ export default function HomeScreen({ navigation }){
             <Ionicons name="location-outline" size={24} color="black" />
 
             <Pressable>
-              <Text style={styles.locationText}>Enviar para João - Pederneiras 17284066</Text>
+              {selectedAddress ? (
+                <Text style={styles.locationText}>Enviar para {selectedAddress?.name} - {selectedAddress?.street}</Text>
+              ) : (
+                <Text style={styles.locationText}>Selecione um endereço</Text>
+              )}
             </Pressable>
 
             <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
@@ -476,6 +481,45 @@ export default function HomeScreen({ navigation }){
             horizontal={true}
             showsHorizontalScrollIndicator={false}
           >
+
+            {addresses?.map((item, index) => {
+              return (
+                <Pressable
+                  key={index}
+                  onPress={() => setSelectedAddress(item)}
+                  style={{
+                    width: 140,
+                    height: 140,
+                    borderColor: '#D0D0D0',
+                    borderWidth: 1,
+                    padding: 10,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: 3,
+                    marginRight: 15,
+                    marginTop: 10,
+                    backgroundColor: selectedAddress === item ? "#FBCEB1" : 'white'
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      gap: 3
+                    }}
+                  >
+                    <Text style={{fontSize: 13, fontWeight: 'bold'}}>{item?.name}</Text>
+                    <Entypo name="location-pin" size={24} color={'red'} />
+                  </View>
+
+                  <Text numberOfLines={1} style={{width: 130, fontSize: 13, textAlign: 'center'}}>{item?.houseNumber} {item?.landmark}</Text>
+
+                  <Text numberOfLines={1} style={{width: 130, fontSize: 13, textAlign: 'center'}}>{item?.street}</Text>
+                  <Text numberOfLines={1} style={{width: 130, fontSize: 13, textAlign: 'center'}}>Brasil, Pederneiras</Text>
+                </Pressable>
+              )
+            })}
+
             <Pressable
               onPress={() => {
                 setModalVisible(false)
