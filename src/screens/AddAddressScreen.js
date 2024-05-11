@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, {useEffect, useState, useContext, useCallback} from "react";
 import {View, StyleSheet, Text, ScrollView, Platform, Pressable} from "react-native";
 import MainHeader from "../components/MainHeader";
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
@@ -6,6 +6,7 @@ import axios from "axios";
 import {AuthContext} from "../contexts/Auth";
 import {UserType} from "../contexts/UserContext";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
+import {useFocusEffect} from "@react-navigation/native";
 
 export default function AddAddressScreen({ navigation }){
 
@@ -29,6 +30,12 @@ export default function AddAddressScreen({ navigation }){
       console.log("erro", error)
     }
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchAddresses()
+    }, [])
+  )
 
   return (
     <ScrollView
