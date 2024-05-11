@@ -5,11 +5,13 @@ import {useNavigation, useRoute} from "@react-navigation/native";
 import { MaterialCommunityIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 import {useDispatch} from "react-redux";
 import {addToCart} from "../redux/CartReducer";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 const { width } = Dimensions.get("window")
 
 export default function ProductInfoScreen(){
 
+  const insets = useSafeAreaInsets()
   const navigation = useNavigation()
   const route = useRoute()
   const product = route.params
@@ -27,7 +29,15 @@ export default function ProductInfoScreen(){
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}
-      style={styles.container}
+      style={[
+        styles.container,
+        {
+          paddingTop: insets.top,
+          paddingBottom: insets.bottom,
+          paddingLeft: insets.left,
+          paddingRight: insets.right
+        }
+      ]}
     >
       <MainHeader />
 
@@ -225,7 +235,8 @@ export default function ProductInfoScreen(){
           justifyContent: 'center',
           alignItems: 'center',
           marginHorizontal: 10,
-          marginVertical: 10
+          marginTop: 10,
+          marginBottom: 45
         }}
       >
         <Text>
@@ -238,7 +249,6 @@ export default function ProductInfoScreen(){
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 45,
     flex: 1,
     backgroundColor: 'white'
   },

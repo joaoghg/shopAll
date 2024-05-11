@@ -12,8 +12,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {UserType} from "../contexts/UserContext";
 import {AuthContext} from "../contexts/Auth";
 import { jwtDecode } from "jwt-decode";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 export default function HomeScreen({ navigation }){
+
+  const insets = useSafeAreaInsets()
 
   const { server } = useContext(AuthContext)
   const { userId, setUserId } = useContext(UserType);
@@ -251,7 +254,17 @@ export default function HomeScreen({ navigation }){
 
   return (
     <>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView
+        style={[
+          styles.container,
+          {
+            paddingTop: insets.top,
+            paddingBottom: insets.bottom,
+            paddingLeft: insets.left,
+            paddingRight: insets.right
+          }
+        ]}
+      >
         <ScrollView>
 
           <MainHeader />
@@ -577,7 +590,6 @@ export default function HomeScreen({ navigation }){
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Platform.OS === 'android' ? 40 : 0,
     flex: 1,
     backgroundColor: 'white'
   },

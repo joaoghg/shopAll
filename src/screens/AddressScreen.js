@@ -6,8 +6,11 @@ import {UserType} from "../contexts/UserContext";
 import "core-js/stable/atob";
 import axios from "axios";
 import {AuthContext} from "../contexts/Auth";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 export default function AddressScreen({ navigation }){
+
+  const insets = useSafeAreaInsets()
 
   const [name, setName] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
@@ -69,7 +72,10 @@ export default function AddressScreen({ navigation }){
   return (
     <ScrollView
       style={{
-        marginTop: Platform.OS === 'android' ? 27 : 50
+        paddingTop: insets.top,
+        paddingBottom: insets.bottom,
+        paddingLeft: insets.left,
+        paddingRight: insets.right
       }}
     >
       <View style={{ height: 50, backgroundColor: '#00CED1' }} />
@@ -175,7 +181,7 @@ export default function AddressScreen({ navigation }){
             borderRadius: 6,
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: 20
+            marginVertical: 20,
           }}
         >
           <Text style={{fontWeight: 'bold'}}>Adicionar</Text>

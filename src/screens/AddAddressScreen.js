@@ -5,9 +5,11 @@ import { MaterialIcons, Entypo } from '@expo/vector-icons';
 import axios from "axios";
 import {AuthContext} from "../contexts/Auth";
 import {UserType} from "../contexts/UserContext";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 export default function AddAddressScreen({ navigation }){
 
+  const insets = useSafeAreaInsets()
   const { userId, setUserId } = useContext(UserType);
   const { server } = useContext(AuthContext)
 
@@ -32,7 +34,10 @@ export default function AddAddressScreen({ navigation }){
     <ScrollView
       showsVerticalScrollIndicator={false}
       style={{
-        marginTop: Platform.OS === 'android' ? 27 : 50
+        paddingTop: insets.top,
+        paddingBottom: insets.bottom,
+        paddingLeft: insets.left,
+        paddingRight: insets.right
       }}
     >
       <MainHeader />
