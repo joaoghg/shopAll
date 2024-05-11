@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AntDesign, Feather} from '@expo/vector-icons';
 import {decrementQuantity, incrementQuantity, removeFromCart} from "../redux/CartReducer";
 
-export default function CartScreen(){
+export default function CartScreen({ navigation }){
 
   const insets = useSafeAreaInsets()
   const cart = useSelector(state => state.cart.cart)
@@ -59,6 +59,7 @@ export default function CartScreen(){
         </View>
 
         <Pressable
+          onPress={() => navigation.navigate("Confirm")}
           style={{
             backgroundColor: '#FFC72C',
             padding: 10,
@@ -66,8 +67,10 @@ export default function CartScreen(){
             justifyContent: 'center',
             alignItems: 'center',
             marginHorizontal: 10,
-            marginTop: 10
+            marginTop: 10,
+            opacity: cart.length > 0 ? 1 : 0.5
           }}
+          disabled={cart.length <= 0}
         >
           <Text>Comprar {cart.length} itens</Text>
         </Pressable>
