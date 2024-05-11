@@ -2,8 +2,9 @@ import React from "react";
 import {View, StyleSheet, Text, ScrollView, Pressable, Image} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import MainHeader from "../components/MainHeader";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AntDesign, Feather} from '@expo/vector-icons';
+import {incrementQuantity} from "../redux/CartReducer";
 
 export default function CartScreen(){
 
@@ -11,6 +12,12 @@ export default function CartScreen(){
   const cart = useSelector(state => state.cart.cart)
   const total = cart?.map(item => item.price * item.quantity)
     .reduce((current, prev) => current + prev, 0)
+
+  const dispatch = useDispatch()
+
+  const increaseQuantity = (item) => {
+    dispatch(incrementQuantity(item))
+  }
 
   return (
     <ScrollView
@@ -62,7 +69,8 @@ export default function CartScreen(){
 
       <View
         style={{
-          marginHorizontal: 10
+          marginHorizontal: 10,
+          marginBottom: 40
         }}
       >
         {cart?.map((item, index) => {
@@ -107,7 +115,7 @@ export default function CartScreen(){
               <Pressable
                 style={{
                   marginTop: 15,
-                  marginBottom: 20,
+                  marginBottom: 5,
                   flexDirection: 'row',
                   alignItems: 'center',
                   gap: 10
@@ -144,6 +152,7 @@ export default function CartScreen(){
                   </Pressable>
 
                   <Pressable
+                    onPress={() => increaseQuantity(item)}
                     style={{
                       backgroundColor: '#D8D8D8',
                       padding: 7,
@@ -166,12 +175,6 @@ export default function CartScreen(){
                   }}
                 >
                   <Text>Excluir</Text>
-                </Pressable>
-              </Pressable>
-
-              <Pressable>
-                <Pressable>
-                  <Text></Text>
                 </Pressable>
               </Pressable>
 

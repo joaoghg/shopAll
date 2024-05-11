@@ -68,7 +68,9 @@ export default function AddAddressScreen({ navigation }){
           <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
         </Pressable>
 
-        <Pressable>
+        <Pressable
+          style={{marginBottom: 30}}
+        >
           {addresses?.map((item, index) => {
             return (
               <Pressable
