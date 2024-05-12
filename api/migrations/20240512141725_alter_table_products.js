@@ -3,7 +3,7 @@
  * @returns {Knex.SchemaBuilder}
  */
 exports.up = function(knex) {
-  return knex.schema.table('produtos', function(table) {
+  return knex.schema.table('products', function(table) {
     table.integer('categorieId').unsigned();
     table.foreign('categorieId').references('categories.id')
   })
@@ -14,7 +14,7 @@ exports.up = function(knex) {
  * @returns {Knex.SchemaBuilder}
  */
 exports.down = function(knex) {
-  return knex.schema.table('produtos', function(table) {
+  return knex.schema.table('products', function(table) {
     table.dropForeign('categorieId');
     table.dropColumn('categorieId');
   })
