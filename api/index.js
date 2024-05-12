@@ -8,7 +8,6 @@ require('dotenv').config();
 
 const app = express()
 const port = 8000
-app.db = db
 
 app.use(cors())
 
@@ -161,4 +160,37 @@ app.get("/addresses/:userId", async (req, res) => {
   }catch(error){
     res.status(500).json({ message: "Erro buscando endereços" })
   }
+})
+
+//Rota para salvar pedidos
+app.post("/orders", (req, res) => {
+  db.transaction(async (trx) => {
+    try{
+      const { userId, cartItems, totalPrice, shippingAddress, paymentMethod } = req.body
+
+      const user = await trx('users').where('id', userId).first()
+      if(!user){
+        return res.status(404).json({message: "Usuário não encontrado"})
+      }
+
+      const order = {
+        totalPrice: totalPrice,
+        paymentMethod: paymentMethod,
+        userId: userId,
+        addressId: shippingAddress
+      }
+
+      const orderId = await trx('orders')
+        .insert(order, 'id')
+
+      const products = cartItems.map(item => {
+
+      })
+
+      await trx.commit()
+    }catch (error){
+      await trx.rollback()
+      res.status(500).json({message: "Erro ao salvar pedido"})
+    }
+  })
 })

@@ -5,10 +5,11 @@
 exports.up = function(knex) {
   return knex.schema.createTable('order_products', table => {
     table.increments('id').primary()
+    table.string('name').notNullable()
     table.integer('quantity').notNullable()
     table.decimal('price', 10, 2)
     table.integer('orderId').unsigned().notNullable()
-    table.integer('productId').unsigned().notNullable()
+    table.integer('productId').unsigned()
     table.foreign('orderId').references('orders.id')
     table.foreign('productId').references('products.id')
   })

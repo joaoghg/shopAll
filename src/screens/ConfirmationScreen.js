@@ -4,7 +4,8 @@ import {useSafeAreaInsets} from "react-native-safe-area-context";
 import axios from "axios";
 import {AuthContext} from "../contexts/Auth";
 import {UserType} from "../contexts/UserContext";
-import { Entypo, FontAwesome6 } from '@expo/vector-icons';
+import {Entypo, FontAwesome6, MaterialIcons} from '@expo/vector-icons';
+import {useSelector} from "react-redux";
 
 export default function ConfirmationScreen(){
 
@@ -15,7 +16,7 @@ export default function ConfirmationScreen(){
     { title: "Endereço", content: "Address Form" },
     { title: "Entrega", content: "Delivery Options" },
     { title: "Pagamento", content: "Payment Details" },
-    { title: "Place Order", content: "Order Summary" },
+    { title: "Finalizar", content: "Order Summary" },
   ];
 
   const insets = useSafeAreaInsets()
@@ -23,6 +24,12 @@ export default function ConfirmationScreen(){
   const [currentStep, setCurrentStep] = useState(0);
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState("");
+  const [option, setOption] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const cart = useSelector(state => state.cart.cart)
+  const total = cart?.map(item => item.price * item.quantity)
+    .reduce((current, prev) => current + prev, 0)
 
   useEffect(() => {
     fetchAddresses()
@@ -49,11 +56,7 @@ export default function ConfirmationScreen(){
         flex: 1
       }}
     >
-      <ScrollView
-        style={{
-          marginTop: 55
-        }}
-      >
+      <ScrollView>
         <View
           style={{
             flex: 1,
@@ -112,7 +115,8 @@ export default function ConfirmationScreen(){
         {currentStep === 0 && (
           <View
             style={{
-              marginHorizontal: 20
+              marginHorizontal: 20,
+              marginBottom: 30
             }}
           >
             <Text style={{fontSize: 16, fontWeight: 'bold'}}>Escolha o endereço de entrega</Text>
@@ -238,6 +242,211 @@ export default function ConfirmationScreen(){
             </Pressable>
           </View>
         )}
+
+        {currentStep === 1 && (
+          <View style={{marginHorizontal: 20}}>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>Formas de entrega</Text>
+
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                backgroundColor: 'white',
+                padding: 8,
+                gap: 7,
+                borderColor: '#D0D0D0',
+                borderWidth: 1,
+                marginTop: 10
+              }}
+            >
+              {option ? (
+                <FontAwesome6 name="dot-circle" size={24} color="#008397" />
+              ) : (
+                <Entypo name="circle" size={24} color="gray" onPress={() => setOption(!option)} />
+              )}
+
+              <Text style={{flex: 1}}>
+                <Text style={{ color: "green", fontWeight: "500" }}>Entrega em até 3 dias úteis</Text>
+                <Text> - Entrega grátis</Text>
+              </Text>
+            </View>
+
+            <Pressable
+              onPress={() => setCurrentStep(2)}
+              style={{
+                backgroundColor: '#FFC72C',
+                padding: 10,
+                borderRadius: 20,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 15,
+                opacity: option ? 1 : 0.5
+              }}
+              disabled={!option}
+            >
+              <Text>Continuar</Text>
+            </Pressable>
+          </View>
+        )}
+
+        {currentStep === 2 && (
+          <View
+            style={{
+              marginHorizontal: 20
+            }}
+          >
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>Escolha o método de pagamento</Text>
+
+            <View
+              style={{
+                backgroundColor: 'white',
+                padding: 8,
+                borderColor: '#D0D0D0',
+                borderWidth: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 7,
+                marginTop: 12
+              }}
+            >
+
+              {selectedOption === "cash" ? (
+                <FontAwesome6 name="dot-circle" size={24} color="#008397" />
+              ) : (
+                <Entypo name="circle" size={24} color="gray" onPress={() => setSelectedOption("cash")} />
+              )}
+
+              <Text>Pagar na entrega</Text>
+            </View>
+
+            <View
+              style={{
+                backgroundColor: 'white',
+                padding: 8,
+                borderColor: '#D0D0D0',
+                borderWidth: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 7,
+                marginTop: 12
+              }}
+            >
+
+              {selectedOption === "card" ? (
+                <FontAwesome6 name="dot-circle" size={24} color="#008397" />
+              ) : (
+                <Entypo name="circle" size={24} color="gray" onPress={() => setSelectedOption("card")} />
+              )}
+
+              <Text>Cartão de crédito</Text>
+            </View>
+
+            <Pressable
+              onPress={() => setCurrentStep(3)}
+              style={{
+                backgroundColor: '#FFC72C',
+                padding: 10,
+                borderRadius: 20,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 15,
+                opacity: selectedOption === "" ? 0.5 : 1
+              }}
+              disabled={selectedOption === ""}
+            >
+              <Text>Continuar</Text>
+            </Pressable>
+          </View>
+        )}
+
+        {currentStep === 3 && selectedOption === "cash" && (
+          <View
+            style={{
+              marginHorizontal: 20
+            }}
+          >
+            <Text style={{ fontSize: 20, fontWeight: "bold" }}>Finalizar pedido</Text>
+
+            <View
+              style={{
+                backgroundColor: 'white',
+                padding: 8,
+                borderColor: '#D0D0D0',
+                borderWidth: 1,
+                marginTop: 10
+              }}
+            >
+              <Text>Enviando para {selectedAddress?.name}</Text>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginTop: 8
+                }}
+              >
+                <Text style={{fontSize: 16, fontWeight: '500', color: 'gray'}}>Itens</Text>
+
+                <Text style={{color: 'gray', fontSize: 16}}>R$ {total}</Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginTop: 8
+                }}
+              >
+                <Text style={{fontSize: 16, fontWeight: '500', color: 'gray'}}>Entrega</Text>
+
+                <Text style={{color: 'gray', fontSize: 16}}>R$ 0</Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginTop: 8
+                }}
+              >
+                <Text style={{fontSize: 20, fontWeight: 'bold'}}>Total</Text>
+
+                <Text style={{fontSize: 17, fontWeight: 'bold'}}>R$ {total}</Text>
+              </View>
+            </View>
+
+            <View
+              style={{
+                backgroundColor: 'white',
+                padding: 8,
+                borderColor: '#D0D0D0',
+                borderWidth: 1,
+                marginTop: 10
+              }}
+            >
+              <Text style={{fontSize: 16, color: 'gray'}}>Pagamento</Text>
+
+              <Text style={{fontSize: 16, fontWeight: "600", marginTop: 7}}>Pagamento na entrega</Text>
+            </View>
+
+            <Pressable
+              style={{
+                backgroundColor: '#FFC72C',
+                padding: 10,
+                borderRadius: 20,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 20
+              }}
+            >
+              <Text>Confirmar pedido</Text>
+            </Pressable>
+          </View>
+        )}
+
       </ScrollView>
     </SafeAreaView>
   )
