@@ -360,7 +360,11 @@ export default function ConfirmationScreen({ navigation }){
               {selectedOption === "card" ? (
                 <FontAwesome6 name="dot-circle" size={24} color="#008397" />
               ) : (
-                <Entypo name="circle" size={24} color="gray" onPress={() => setSelectedOption("card")} />
+                <Entypo name="circle" size={24} color="gray"
+                  onPress={() => {
+                    setSelectedOption("card")
+                  }}
+                />
               )}
 
               <Text>Cartão de crédito</Text>
