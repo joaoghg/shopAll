@@ -194,10 +194,29 @@ app.post("/orders", (req, res) => {
         .insert(products)
 
       await trx.commit()
-      res.status(201).json({"message": "Pedido criado com sucesso"})
+      res.status(201).json({message: "Pedido criado com sucesso"})
     }catch (error){
       await trx.rollback()
       res.status(500).json({message: "Erro ao salvar pedido"})
     }
   })
+})
+
+//Rota para buscar pedidos
+app.get("/orders/:userId", async (req,res) => {
+  try{
+    const userId = req.params.userId
+
+    const user = await db('users').where('id', userId).first()
+    if(!user){
+      return res.status(404).json({message: "Usuário não encontrado"})
+    }
+
+    const orders = await db('orders')
+      .where('userId', userId)
+
+    res.status(200).json({orders})
+  }catch{
+    res.status(500).json({message: "Erro ao buscar pedidos"})
+  }
 })
