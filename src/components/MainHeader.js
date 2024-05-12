@@ -9,8 +9,6 @@ export default function MainHeader(){
         <AntDesign name="search1" size={22} color="black" style={{ paddingLeft: 10 }} />
         <TextInput placeholder={"Pesquisar"} />
       </Pressable>
-
-      <Feather name="mic" size={24} color="black" />
     </View>
   )
 }
