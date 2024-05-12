@@ -183,11 +183,18 @@ app.post("/orders", (req, res) => {
       const orderId = await trx('orders')
         .insert(order, 'id')
 
-      const products = cartItems.map(item => {
+      const products = cartItems.map(item => ({
+        name: item?.name,
+        quantity: item.quantity,
+        price: item.price,
+        orderId: orderId
+      }))
 
-      })
+      await trx('order_products')
+        .insert(products)
 
       await trx.commit()
+      res.status(201).json({"message": "Pedido criado com sucesso"})
     }catch (error){
       await trx.rollback()
       res.status(500).json({message: "Erro ao salvar pedido"})
