@@ -180,11 +180,16 @@ app.post("/orders", (req, res) => {
         addressId: shippingAddress
       }
 
-      const orderId = await trx('orders')
-        .insert(order, 'id')
+      await trx('orders')
+        .insert(order)
+
+      const orderId = trx.select('id')
+        .from('orders')
+        .orderBy('id', 'desc')
+        .first()
 
       const products = cartItems.map(item => ({
-        name: item?.name,
+        name: item?.title,
         quantity: item.quantity,
         price: item.price,
         orderId: orderId

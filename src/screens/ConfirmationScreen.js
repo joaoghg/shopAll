@@ -1,16 +1,18 @@
 import React, {useContext, useState, useEffect} from "react";
-import {View, StyleSheet, Text, SafeAreaView, ScrollView, Pressable} from "react-native";
+import {View, StyleSheet, Text, SafeAreaView, ScrollView, Pressable, Alert} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import axios from "axios";
 import {AuthContext} from "../contexts/Auth";
 import {UserType} from "../contexts/UserContext";
 import {Entypo, FontAwesome6, MaterialIcons} from '@expo/vector-icons';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {clearCart} from "../redux/CartReducer";
 
-export default function ConfirmationScreen(){
+export default function ConfirmationScreen({ navigation }){
 
   const { server } = useContext(AuthContext)
   const { userId } = useContext(UserType)
+  const dispatch = useDispatch()
 
   const steps = [
     { title: "Endereço", content: "Address Form" },
@@ -43,6 +45,29 @@ export default function ConfirmationScreen(){
       setAddresses(addresses)
     }catch(error){
       console.log("erro", error)
+    }
+  }
+
+  const handleConfirm = async () => {
+    try{
+      const orderData = {
+        userId: userId,
+        cartItems: cart,
+        totalPrice: total,
+        shippingAddress: selectedAddress.id,
+        paymentMethod: selectedOption
+      }
+
+      await axios.post(`${server}/orders`, orderData)
+      navigation.navigate("Order")
+      dispatch(clearCart())
+    }catch (error) {
+      if(error.response){
+        Alert.alert("Erro", error.response.data.message)
+      }
+      else{
+        Alert.alert("Erro", "Erro ao finalizar pedido")
+      }
     }
   }
 
@@ -433,6 +458,7 @@ export default function ConfirmationScreen(){
             </View>
 
             <Pressable
+              onPress={handleConfirm}
               style={{
                 backgroundColor: '#FFC72C',
                 padding: 10,
