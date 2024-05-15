@@ -553,35 +553,6 @@ export default function HomeScreen({ navigation }){
             </Pressable>
           </ScrollView>
 
-          <View
-            style={{
-              flexDirection: "column",
-              gap: 7,
-              marginBottom: 10
-            }}
-          >
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 5
-              }}
-            >
-              <Entypo name="location-pin" size={22} color="#0066b2" />
-              <Text style={{ color: '#0066b2', fontWeight: "400" }}>Informe o CEP</Text>
-            </View>
-
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 5
-              }}
-            >
-              <Ionicons name="locate-sharp" size={22} color="#0066b2" />
-              <Text style={{ color: '#0066b2', fontWeight: "400" }}>Usar localização atual</Text>
-            </View>
-          </View>
         </ModalContent>
       </BottomModal>
     </>
