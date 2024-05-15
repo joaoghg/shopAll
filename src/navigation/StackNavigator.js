@@ -1,5 +1,4 @@
 import React from "react"
-import { StyleSheet, Text, View } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -45,7 +44,6 @@ export default function StackNavigator(){
           options={{
             tabBarLabel: "Perfil",
             tabBarLabelStyle: {color: "#008E97"},
-            headerShown: false,
             tabBarIcon: ({focused}) =>
               focused ? (
                 <Ionicons name="person" size={24} color="#008E97" />
