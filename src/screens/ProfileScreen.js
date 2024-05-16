@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useEffect, useContext } from "react";
+import React, { useLayoutEffect, useEffect, useContext, useState } from "react";
 import {View, StyleSheet, Text, Pressable} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import { Ionicons, AntDesign } from "@expo/vector-icons"
@@ -11,6 +11,8 @@ export default function ProfileScreen({ navigation }){
   const insets = useSafeAreaInsets()
   const { server } = useContext(AuthContext)
   const { userId } = useContext(UserType)
+
+  const [user, setUser] = useState(null)
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -48,11 +50,14 @@ export default function ProfileScreen({ navigation }){
       try{
         const response = await axios.get(`${server}/profile/${userId}`)
 
-        
+        const { user } = response.data
+        setUser(user)
       }catch (error){
         console.log(error)
       }
     }
+
+    fetchUserProfile()
 
   }, [])
 

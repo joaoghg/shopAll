@@ -225,3 +225,19 @@ app.get("/orders/:userId", async (req,res) => {
     res.status(500).json({message: "Erro ao buscar pedidos"})
   }
 })
+
+//Buscando perfil
+app.get("/profile/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const user = await db('users').where('id', userId).first()
+    if(!user){
+      return res.status(404).json({message: "Usuário não encontrado"})
+    }
+
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ message: "Erro buscando o usuário" });
+  }
+});
