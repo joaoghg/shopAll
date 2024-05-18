@@ -4,6 +4,7 @@ const db = require("./config/db")
 const crypto = require("crypto")
 const nodemailer = require("nodemailer")
 const cors = require("cors")
+const bcrypt = require("bcrypt")
 require('dotenv').config();
 
 const app = express()
@@ -63,12 +64,13 @@ app.post("/register", async (req, res) => {
     }
 
     const verificationToken = crypto.randomBytes(20).toString("hex")
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     await db('users')
       .insert({
         name: name,
         email: email.toLowerCase(),
-        password: password,
+        password: hashedPassword,
         verificationToken: verificationToken
       })
 
@@ -112,7 +114,7 @@ app.post("/login", async (req, res) => {
       return res.status(401).json({message: "Credenciais inválidas"})
     }
 
-    if(user.password !== password){
+    if(!await bcrypt.compare(password, user.password)){
       return res.status(401).json({message: "Credenciais inválidas"})
     }
 

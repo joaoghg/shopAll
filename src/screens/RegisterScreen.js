@@ -40,6 +40,8 @@ export default function RegisterScreen({ navigation }){
         setNome("")
         setSenha("")
         setEmail("")
+        setConfirmSenha("")
+        navigation.navigate("Login")
       })
       .catch(error => {
         if(error.response){
