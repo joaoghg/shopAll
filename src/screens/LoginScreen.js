@@ -105,9 +105,9 @@ export default function LoginScreen({ navigation }){
           </View>
         </View>
 
-        <View style={{ marginTop: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+        {/*<View style={{ marginTop: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
           <Text style={{ color: '#007FFF', fontWeight: "500" }}>Esqueceu a senha?</Text>
-        </View>
+        </View>*/}
 
         <View style={{ marginTop: 80 }} />
 

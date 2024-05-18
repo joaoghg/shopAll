@@ -13,9 +13,21 @@ export default function RegisterScreen({ navigation }){
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState('');
+  const [confirmSenha, setConfirmSenha] = useState('');
   const [nome, setNome] = useState('');
 
   const handleRegister = () => {
+
+    if(nome === '' || email === '' || senha === ''){
+      Alert.alert("Atenção", "Preencha todas as informações")
+      return false
+    }
+
+    if(senha !== confirmSenha){
+      Alert.alert("Atenção", "Senha inválida")
+      return false
+    }
+
     const user = {
       name: nome,
       email: email,
@@ -60,7 +72,7 @@ export default function RegisterScreen({ navigation }){
           <Text style={styles.textLogin}>Cadastre-se</Text>
         </View>
 
-        <View style={{ marginTop: 70 }}>
+        <View>
 
           <View style={styles.viewInput}>
             <MaterialIcons style={styles.iconEmail} name="person" size={24} color="gray" />
@@ -96,7 +108,20 @@ export default function RegisterScreen({ navigation }){
           </View>
         </View>
 
-        <View style={{ marginTop: 80 }} />
+        <View>
+          <View style={styles.viewInput}>
+            <MaterialIcons style={styles.iconEmail} name="lock" size={24} color="gray" />
+
+            <TextInput style={[styles.inputEmail, { fontSize: senha ? 16 : 16 }]}
+              placeholder={"Confirme sua senha"}
+              value={confirmSenha}
+              onChangeText={setConfirmSenha}
+              secureTextEntry={true}
+            />
+          </View>
+        </View>
+
+        <View style={{ marginTop: 60 }} />
 
         <Pressable
           onPress={handleRegister}
