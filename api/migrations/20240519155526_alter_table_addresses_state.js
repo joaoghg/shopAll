@@ -4,7 +4,8 @@
  */
 exports.up = function(knex) {
   return knex.schema.table('addresses', function(table) {
-    table.boolean('default').defaultTo(false)
+    table.string('neighborhood')
+    table.string('state')
   })
 };
 
@@ -14,6 +15,7 @@ exports.up = function(knex) {
  */
 exports.down = function(knex) {
   return knex.schema.table('addresses', function(table) {
-    table.dropColumn('default')
+    table.dropColumn('neighborhood')
+    table.dropColumn('state')
   })
 };
