@@ -120,7 +120,9 @@ export default function AddAddressScreen({ navigation }){
 
                 <Text style={{fontSize: 15, color: '#181818'}}>{item?.street}</Text>
 
-                <Text style={{fontSize: 15, color: '#181818'}}>Brasil, Pederneiras</Text>
+                <Text style={{fontSize: 15, color: '#181818'}}>{item?.neighborhood}</Text>
+
+                <Text style={{fontSize: 15, color: '#181818'}}>{item?.country}, {item?.city}</Text>
 
                 <Text style={{fontSize: 15, color: '#181818'}}>Celular {item?.mobileNumber}</Text>
                 <Text style={{fontSize: 15, color: '#181818'}}>CEP: {item?.cep}</Text>
