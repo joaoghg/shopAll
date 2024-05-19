@@ -7,6 +7,7 @@ exports.up = function(knex) {
       table.increments('id').primary()
       table.integer('productId').unsigned().notNullable()
       table.string('path')
+      table.boolean('default').defaultTo(false)
       table.foreign('productId').references('products.id')
     })
   };
