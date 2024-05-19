@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext, useCallback} from "react";
-import {View, StyleSheet, Text, ScrollView, Platform, Pressable} from "react-native";
+import {View, StyleSheet, Text, ScrollView, Platform, Pressable, Alert} from "react-native";
 import MainHeader from "../components/MainHeader";
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
 import axios from "axios";
@@ -36,6 +36,20 @@ export default function AddAddressScreen({ navigation }){
       fetchAddresses()
     }, [])
   )
+
+  const deleteAddress = async (id) => {
+    try{
+      await axios.delete(`${server}/addresses/${id}`)
+      fetchAddresses()
+    }catch (error){
+      if(error.response){
+        Alert.alert("Erro", error.response.data.message)
+      }
+      else{
+        Alert.alert("Erro", "Não foi possível excluir o endereço")
+      }
+    }
+  }
 
   return (
     <ScrollView
@@ -120,19 +134,7 @@ export default function AddAddressScreen({ navigation }){
                   }}
                 >
                   <Pressable
-                    style={{
-                      backgroundColor: '#F5F5F5',
-                      paddingHorizontal: 10,
-                      paddingVertical: 6,
-                      borderRadius: 5,
-                      borderWidth: 0.9,
-                      borderColor: '#D0D0D0'
-                    }}
-                  >
-                    <Text>Editar</Text>
-                  </Pressable>
-
-                  <Pressable
+                    onPress={() => deleteAddress(item.id)}
                     style={{
                       backgroundColor: '#F5F5F5',
                       paddingHorizontal: 10,
@@ -143,19 +145,6 @@ export default function AddAddressScreen({ navigation }){
                     }}
                   >
                     <Text>Excluir</Text>
-                  </Pressable>
-
-                  <Pressable
-                    style={{
-                      backgroundColor: '#F5F5F5',
-                      paddingHorizontal: 10,
-                      paddingVertical: 6,
-                      borderRadius: 5,
-                      borderWidth: 0.9,
-                      borderColor: '#D0D0D0'
-                    }}
-                  >
-                    <Text>Definir como padrão</Text>
                   </Pressable>
                 </View>
               </Pressable>

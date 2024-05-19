@@ -26,7 +26,6 @@ export default function OrderScreen({ navigation }){
     >
       <LottieView
         source={require("../../assets/thumbs.json")}
-        // ref={animation}
         style={{
           height: 260,
           width: 300,

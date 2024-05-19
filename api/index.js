@@ -16,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 const jwt = require("jsonwebtoken")
+const {includes} = require("core-js/internals/array-includes");
 
 app.listen(port, () => {
   console.log(`Api rodando na porta ${port}`)
@@ -142,6 +143,26 @@ app.post("/addresses", async (req, res) => {
     res.status(201).json({ message: "Endereço adicionado" })
   }catch(error){
     res.status(500).json({ message: "Erro adicionando endereço" })
+  }
+})
+
+//Rota para excluir endereço
+app.delete("/addresses/:id", async (req, res) => {
+  try{
+    const { id } = req.params
+
+    await db('addresses')
+      .where('id', id)
+      .del()
+
+    res.status(201).json({ message: "Endereço excluído" })
+  }catch(error){
+    if(error.sqlMessage.includes("foreign key")){
+      res.status(500).json({ message: "Já existem pedidos com esse endereço" })
+    }
+    else{
+      res.status(500).json({ message: "Erro excluindo endereço" })
+    }
   }
 })
 
