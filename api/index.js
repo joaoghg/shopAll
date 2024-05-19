@@ -9,6 +9,7 @@ require('dotenv').config();
 
 const app = express()
 const port = 8000
+let categories
 
 app.use(cors())
 
@@ -27,8 +28,6 @@ db.migrate
     insertCategories()
       .then(insertProducts)
   })
-
-let categories
 
 //Início das funções
 const sendVerificationEmail = async (email, verificationToken) => {
@@ -67,16 +66,16 @@ const insertCategories = async () => {
     ]
 
     await db('categories')
-      .insert(items)
-
-    categories = await db('categories')
-
-    return Promise.resolve()
+      .insert(items)    
   }
+
+  categories = await db.select().table('categories')
+  return Promise.resolve()
 }
 const insertProducts = async () => {
   const productsQtd = await db('products').count('id as quantity')
   if(productsQtd[0].quantity === 0){
+
     const products = [
       {
         name: "OnePlus Nord CE 3 Lite 5G (Limão, 8GB RAM, 128GB Armazenamento)",
@@ -90,6 +89,7 @@ const insertProducts = async () => {
         ],
         color: "Limão",
         size: "8 GB RAM 128GB Armazenamento",
+        categorieId: categories.find(item => item.name === "Eletrônicos").id
       },
       {
         name: "Samsung Galaxy S20 FE 5G (Cloud Navy, 8GB RAM, 128GB Armazenamento)",
@@ -103,6 +103,7 @@ const insertProducts = async () => {
         ],
         color: "Cloud Navy",
         size: "8 GB RAM 128GB Armazenamento",
+        categorieId: categories.find(item => item.name === "Eletrônicos").id
       },
       {
         name: "Samsung Galaxy M14 5G (Prata, 4GB, 128GB Armazenamento) | 50MP Camera tripla | 6000 mAh Bateria | 5nm Octa-Core Processador | Android 13",
@@ -115,6 +116,7 @@ const insertProducts = async () => {
         ],
         color: "Prata",
         size: "4 GB RAM 128GB Armazenamento",
+        categorieId: categories.find(item => item.name === "Eletrônicos").id
       },
       {
         name: "Realme narzo N55 (Azul, 4GB+64GB)",
@@ -126,7 +128,8 @@ const insertProducts = async () => {
           { path: "https://images-eu.ssl-images-amazon.com/images/G/31/tiyesum/N55/June/xcm_banners_2022_in_bau_wireless_dec_580x800_v1-n55-marchv2-mayv3-v4_580x800_in-en.jpg", default: 1 },
         ],
         color: "Azul",
-        size: "4GB RAM 64GB Armazenamento"
+        size: "4GB RAM 64GB Armazenamento",
+        categorieId: categories.find(item => item.name === "Eletrônicos").id
       },
       {
         name: "Oppo Enco Air3 Pro",
@@ -141,6 +144,7 @@ const insertProducts = async () => {
         ],
         color: "Verde",
         size: "Normal",
+        categorieId: categories.find(item => item.name === "Eletrônicos").id,
       },
       {
         name: "Fastrack Limitless FS1 Pro Smart Watch",
@@ -154,6 +158,7 @@ const insertProducts = async () => {
         ],
         color: "Preto",
         size: "Normal",
+        categorieId: categories.find(item => item.name === "Eletrônicos").id
       },
       {
         name: "Aishwariya System On Ear Wireless On Ear Bluetooth Headphones",
@@ -165,6 +170,7 @@ const insertProducts = async () => {
         ],
         color: "Preto",
         size: "Normal",
+        categorieId: categories.find(item => item.name === "Eletrônicos").id
       },
       {
         name: "Fastrack Limitless FS1 Pro Smart Watch|1.96 Super AMOLED Arched Display with 410x502 Pixel Resolution|SingleSync BT Calling|NitroFast Charging|110+ Sports Modes|200+ Watchfaces|Upto 7 Days Battery",
@@ -178,7 +184,22 @@ const insertProducts = async () => {
         ],
         color: "Azul",
         size: "8GB RAM, 128GB Armazenamento",
-      }
+        categorieId: categories.find(item => item.name === "Eletrônicos").id
+      },
+      {
+        name: "Fastrack Limitless FS1 Pro Smart Watch|1.96 Super AMOLED Arched Display with 410x502 Pixel Resolution|SingleSync BT Calling|NitroFast Charging|110+ Sports Modes|200+ Watchfaces|Upto 7 Days Battery",
+        price: 24999,
+        offerPrice: 19999,
+        images: [
+          { path: "https://m.media-amazon.com/images/I/41bLD50sZSL._SX300_SY300_QL70_FMwebp_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/616pTr2KJEL._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/71wSGO0CwQL._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/71k3gOik46L._AC_SY400_.jpg", default: 1 },
+        ],
+        color: "Azul",
+        size: "8GB RAM, 128GB Armazenamento",
+        categorieId: categories.find(item => item.name === "Eletrônicos").id
+      },
     ]
 
     products.map(async (item) => {
