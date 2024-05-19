@@ -44,6 +44,7 @@ export default function StackNavigator(){
           options={{
             tabBarLabel: "Perfil",
             tabBarLabelStyle: {color: "#008E97"},
+            headerShown: false,
             tabBarIcon: ({focused}) =>
               focused ? (
                 <Ionicons name="person" size={24} color="#008E97" />

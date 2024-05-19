@@ -6,6 +6,7 @@ import axios from "axios";
 import { AuthContext } from "../contexts/Auth";
 import {UserType} from "../contexts/UserContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import MainHeader from "../components/MainHeader";
 
 export default function ProfileScreen({ navigation }){
 
@@ -25,37 +26,6 @@ export default function ProfileScreen({ navigation }){
   const logout = () => {
     clearAuthToken()
   }
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: '',
-      headerStyle: {
-        backgroundColor: '#00CED1'
-      },
-      headerLeft: () => (
-        <Image
-          style={{ width: 140, height: 120, resizeMode: "contain" }}
-          source={{
-            uri: "https://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c518.png",
-          }}
-        />
-      ),
-      headerRight: () => (
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 6,
-            marginRight: 12,
-          }}
-        >
-          <Ionicons name="notifications-outline" size={24} color="black" />
-
-          <AntDesign name="search1" size={24} color="black" />
-        </View>
-      )
-    })
-  }, [])
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -97,88 +67,78 @@ export default function ProfileScreen({ navigation }){
         backgroundColor: 'white'
       }}
     >
-      <ScrollView
-        style={{
-          padding: 10
-        }}
-      >
-        <Text style={{fontSize: 16, fontWeight: 'bold'}}>Bem vindo {user?.name}</Text>
+      <ScrollView>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 10,
-            marginTop: 12
-          }}
-        >
-          <Pressable
-            style={styles.pressables}
-          >
-            <Text style={{textAlign: 'center'}}>Meus pedidos</Text>
-          </Pressable>
+        <MainHeader />
 
-          <Pressable
-            style={styles.pressables}
+        <View style={{ padding: 10 }}>
+          <Text style={{fontSize: 16, fontWeight: 'bold'}}>Bem vindo {user?.name}</Text>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 10,
+              marginTop: 12
+            }}
           >
-            <Text style={{textAlign: 'center'}}>Minha conta</Text>
-          </Pressable>
+            <Pressable
+              style={styles.pressables}
+            >
+              <Text style={{textAlign: 'center'}}>Meus pedidos</Text>
+            </Pressable>
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 10,
+              marginTop: 12
+            }}
+          >
+            <Pressable
+              onPress={logout}
+              style={styles.pressables}
+            >
+              <Text style={{textAlign: 'center'}}>Sair</Text>
+            </Pressable>
+          </View>
+
+          {/*<ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {loading ? (
+              <Text>Loading...</Text>
+            ) : orders.length > 0 ? (
+              orders.map((order) => (
+                <Pressable
+                  style={{
+                    marginTop: 20,
+                    padding: 15,
+                    borderRadius: 8,
+                    borderWidth: 1,
+                    borderColor: "#d0d0d0",
+                    marginHorizontal: 10,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  key={order.id}
+                >
+                  {order.products.slice(0, 1)?.map((product) => (
+                    <View style={{ marginVertical: 10 }} key={product.id}>
+                      <Image
+                        source={{ uri: product.image }}
+                        style={{ width: 100, height: 100, resizeMode: "contain" }}
+                      />
+                    </View>
+                  ))}
+                </Pressable>
+              ))
+            ) : (
+              <Text>No orders found</Text>
+            )}
+          </ScrollView>*/}
         </View>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 10,
-            marginTop: 12
-          }}
-        >
-          <Pressable
-            style={styles.pressables}
-          >
-            <Text style={{textAlign: 'center'}}>Comprar novamente</Text>
-          </Pressable>
-
-          <Pressable
-            onPress={logout}
-            style={styles.pressables}
-          >
-            <Text style={{textAlign: 'center'}}>Sair</Text>
-          </Pressable>
-        </View>
-
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {loading ? (
-            <Text>Loading...</Text>
-          ) : orders.length > 0 ? (
-            orders.map((order) => (
-              <Pressable
-                style={{
-                  marginTop: 20,
-                  padding: 15,
-                  borderRadius: 8,
-                  borderWidth: 1,
-                  borderColor: "#d0d0d0",
-                  marginHorizontal: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                key={order.id}
-              >
-                {order.products.slice(0, 1)?.map((product) => (
-                  <View style={{ marginVertical: 10 }} key={product.id}>
-                    <Image
-                      source={{ uri: product.image }}
-                      style={{ width: 100, height: 100, resizeMode: "contain" }}
-                    />
-                  </View>
-                ))}
-              </Pressable>
-            ))
-          ) : (
-            <Text>No orders found</Text>
-          )}
-        </ScrollView>
 
       </ScrollView>
     </View>
@@ -188,8 +148,9 @@ export default function ProfileScreen({ navigation }){
 const styles = StyleSheet.create({
   pressables: {
     padding: 10,
-    backgroundColor: '#E0E0E0',
+    backgroundColor: '#FFC72C',
     borderRadius: 25,
-    flex: 1
+    flex: 1,
+    marginVertical: 5
   }
 })
