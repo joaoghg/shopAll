@@ -7,7 +7,9 @@ exports.up = function(knex) {
     table.increments('id').primary()
     table.string('name').notNullable()
     table.decimal('price', 10, 2)
-    table.string('image').notNullable()
+    table.decimal('offerPrice', 10, 2)
+    table.string('color')
+    table.string('size')
   })
 };
 

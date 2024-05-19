@@ -24,9 +24,11 @@ app.listen(port, () => {
 
 db.migrate
   .latest()
+  .then(() => {
+    insertCategories()
+  })
 
 //Início das funções
-
 const sendVerificationEmail = async (email, verificationToken) => {
   const transporter = nodemailer.createTransport({
     service:"gmail",
@@ -51,6 +53,23 @@ const sendVerificationEmail = async (email, verificationToken) => {
 }
 const generateSecretKey = () => {
   return crypto.randomBytes(32).toString("hex")
+}
+const insertCategories = async () => {
+  const categoriesQtd = await db('categories').count('id as quantity')
+  if(categoriesQtd[0].quantity === 0){
+    const categories = [
+      { name: "Roupas masculinas" },
+      { name: "Jóias" },
+      { name: "Eletrônicos" },
+      { name: "Roupas femininas" },
+    ]
+
+    db('categores')
+      .insert(categories)
+  }
+}
+const insertProducts = async () => {
+  const productsQtd = await db('products').count('id as quantity')
 }
 
 //Início das rotas
