@@ -84,38 +84,6 @@ export default function ProductInfoScreen(){
                     </Text>
                   </View>
                 )}
-
-
-                <View
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 20,
-                    backgroundColor: '#E0E0E0',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    flexDirection: 'row'
-                  }}
-                >
-                  <MaterialCommunityIcons name="share-variant" size={24} color="black" />
-                </View>
-              </View>
-
-              <View
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 20,
-                  backgroundColor: '#E0E0E0',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                  marginTop: 'auto',
-                  marginLeft: 20,
-                  marginBottom: 20
-                }}
-              >
-                <AntDesign name="hearto" size={24} color="black" />
               </View>
             </ImageBackground>
           )
@@ -174,26 +142,6 @@ export default function ProductInfoScreen(){
         >
           Total: R$ {product?.price}
         </Text>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            marginVertical: 5,
-            alignItems: 'center',
-            gap: 5
-          }}
-        >
-          <Ionicons name="location" size={24} color="black" />
-
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: '500'
-            }}
-          >
-            Enviar para João - Pederneiras 17284066
-          </Text>
-        </View>
       </View>
 
       <Text
@@ -215,7 +163,8 @@ export default function ProductInfoScreen(){
           justifyContent: 'center',
           alignItems: 'center',
           marginHorizontal: 10,
-          marginVertical: 10
+          marginTop: 10,
+          marginBottom: 50
         }}
       >
         {addedToCart ? (
@@ -225,23 +174,6 @@ export default function ProductInfoScreen(){
         ) : (
           <Text>Adicionar ao carrinho</Text>
         )}
-      </Pressable>
-
-      <Pressable
-        style={{
-          backgroundColor: '#FFAC1C',
-          padding: 10,
-          borderRadius: 20,
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginHorizontal: 10,
-          marginTop: 10,
-          marginBottom: 45
-        }}
-      >
-        <Text>
-          Comprar agora
-        </Text>
       </Pressable>
     </ScrollView>
   )
@@ -253,7 +185,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   backgroundImage: {
-    marginTop: 25,
     resizeMode: 'contain',
     width: width,
     height: width
