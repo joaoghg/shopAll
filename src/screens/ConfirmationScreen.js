@@ -189,58 +189,12 @@ export default function ConfirmationScreen({ navigation }){
 
                       <Text style={{fontSize: 15, color: '#181818'}}>{item?.street}</Text>
 
-                      <Text style={{fontSize: 15, color: '#181818'}}>Brasil, Pederneiras</Text>
+                      <Text style={{fontSize: 15, color: '#181818'}}>{item?.neighborhood}</Text>
+
+                      <Text style={{fontSize: 15, color: '#181818'}}>{item?.country}, {item?.city}</Text>
 
                       <Text style={{fontSize: 15, color: '#181818'}}>Celular {item?.mobileNumber}</Text>
                       <Text style={{fontSize: 15, color: '#181818'}}>CEP: {item?.cep}</Text>
-
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          gap: 10,
-                          marginTop: 7
-                        }}
-                      >
-                        <Pressable
-                          style={{
-                            backgroundColor: '#F5F5F5',
-                            paddingHorizontal: 10,
-                            paddingVertical: 6,
-                            borderRadius: 5,
-                            borderWidth: 0.9,
-                            borderColor: '#D0D0D0'
-                          }}
-                        >
-                          <Text>Editar</Text>
-                        </Pressable>
-
-                        <Pressable
-                          style={{
-                            backgroundColor: '#F5F5F5',
-                            paddingHorizontal: 10,
-                            paddingVertical: 6,
-                            borderRadius: 5,
-                            borderWidth: 0.9,
-                            borderColor: '#D0D0D0'
-                          }}
-                        >
-                          <Text>Excluir</Text>
-                        </Pressable>
-
-                        <Pressable
-                          style={{
-                            backgroundColor: '#F5F5F5',
-                            paddingHorizontal: 10,
-                            paddingVertical: 6,
-                            borderRadius: 5,
-                            borderWidth: 0.9,
-                            borderColor: '#D0D0D0'
-                          }}
-                        >
-                          <Text>Definir padrão</Text>
-                        </Pressable>
-                      </View>
 
                       <View>
                         {selectedAddress && selectedAddress.id === item?.id && (
