@@ -20,6 +20,8 @@ export default function AddressScreen({ navigation }){
   const [cep, setCep] = useState("");
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("Brasil");
+  const [state, setState] = useState("");
+  const [neighborhood, setNeighborhood] = useState("");
 
   const { userId, setUserId } = useContext(UserType);
   const { server } = useContext(AuthContext)
@@ -39,18 +41,31 @@ export default function AddressScreen({ navigation }){
 
     if(name === ""){
       Alert.alert("Atenção", "Informe o nome")
+      return false
     }
-    if(houseNumber === "" && mobileNumber){
+    if(houseNumber === "" && mobileNumber === ""){
       Alert.alert("Atenção", "Informe pelo menos um número de contato")
+      return false
     }
     if(cep === ""){
       Alert.alert("Atenção", "Informe o cep")
+      return false
     }
-    if(street === ""){
-      Alert.alert("Atenção", "Informe a rua")
+    if(state === ""){
+      Alert.alert("Atenção", "Informe o estado")
+      return false
     }
     if(city === ""){
       Alert.alert("Atenção", "Informe a cidade")
+      return false
+    }
+    if(neighborhood === ""){
+      Alert.alert("Atenção", "Informe o bairro")
+      return false
+    }
+    if(street === ""){
+      Alert.alert("Atenção", "Informe a rua")
+      return false
     }
 
     const address = {
@@ -62,7 +77,9 @@ export default function AddressScreen({ navigation }){
       cep,
       userId,
       city,
-      country
+      country,
+      state,
+      neighborhood
     }
 
     axios.post(`${server}/addresses`, {userId, address})
@@ -91,10 +108,12 @@ export default function AddressScreen({ navigation }){
   }
 
   const buscaCep = async () => {
-    if (cep !== "" && cep.replace(/^[0-9]/g, '').length === 8){
+    if (cep !== "" && cep.replace(/^\d$/g, '').length === 8){
       const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
 
+      setState(response.data.uf)
       setStreet(response.data.logradouro)
+      setNeighborhood(response.data.bairro)
       setLandmark(response.data.complemento)
       setCity(response.data.localidade)
     }
@@ -192,6 +211,16 @@ export default function AddressScreen({ navigation }){
               marginVertical: 10
             }}
           >
+            <Text style={{fontSize: 15,fontWeight: 'bold'}}>Estado</Text>
+
+            <TextInput
+              value={state}
+              onChangeText={setState}
+              style={styles.input}
+            />
+          </View>
+
+          <View>
             <Text style={{fontSize: 15,fontWeight: 'bold'}}>Cidade</Text>
 
             <TextInput
@@ -206,6 +235,16 @@ export default function AddressScreen({ navigation }){
               marginVertical: 10
             }}
           >
+            <Text style={{fontSize: 15,fontWeight: 'bold'}}>Bairro</Text>
+
+            <TextInput
+              value={neighborhood}
+              onChangeText={setNeighborhood}
+              style={styles.input}
+            />
+          </View>
+
+          <View>
             <Text style={{fontSize: 15,fontWeight: 'bold'}}>Rua</Text>
 
             <TextInput
