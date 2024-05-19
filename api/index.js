@@ -16,7 +16,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 const jwt = require("jsonwebtoken")
-const {includes} = require("core-js/internals/array-includes");
 
 app.listen(port, () => {
   console.log(`Api rodando na porta ${port}`)
@@ -26,7 +25,10 @@ db.migrate
   .latest()
   .then(() => {
     insertCategories()
+      .then(insertProducts)
   })
+
+let categories
 
 //Início das funções
 const sendVerificationEmail = async (email, verificationToken) => {
@@ -66,10 +68,130 @@ const insertCategories = async () => {
 
     await db('categories')
       .insert(categories)
+
+    categories = await db('categories')
+
+    return Promise.resolve()
   }
 }
 const insertProducts = async () => {
   const productsQtd = await db('products').count('id as quantity')
+  if(productsQtd[0].quantity === 0){
+    const products = [
+      {
+        name: "OnePlus Nord CE 3 Lite 5G (Limão, 8GB RAM, 128GB Armazenamento)",
+        price: 19000,
+        images: [
+          { path: "https://m.media-amazon.com/images/I/61QRgOgBx0L._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/61uaJPLIdML._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/510YZx4v3wL._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/61J6s1tkwpL._SX679_.jpg", default: 0 },
+          { path: "https://images-eu.ssl-images-amazon.com/images/G/31/wireless_products/ssserene/weblab_wf/xcm_banners_2022_in_bau_wireless_dec_580x800_once3l_v2_580x800_in-en.jpg", default: 1 },
+        ],
+        color: "Limão",
+        size: "8 GB RAM 128GB Armazenamento",
+      },
+      {
+        name: "Samsung Galaxy S20 FE 5G (Cloud Navy, 8GB RAM, 128GB Armazenamento)",
+        price: 26000,
+        images: [
+          { path: "https://m.media-amazon.com/images/I/81vDZyJQ-4L._SY879_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/61vN1isnThL._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/71yzyH-ohgL._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/61vN1isnThL._SX679_.jpg", default: 0 },
+          { path: "https://images-eu.ssl-images-amazon.com/images/G/31/img23/Wireless/Samsung/SamsungBAU/S20FE/GW/June23/BAU-27thJune/xcm_banners_2022_in_bau_wireless_dec_s20fe-rv51_580x800_in-en.jpg", default: 1 },
+        ],
+        color: "Cloud Navy",
+        size: "8 GB RAM 128GB Armazenamento",
+      },
+      {
+        name: "Samsung Galaxy M14 5G (Prata, 4GB, 128GB Armazenamento) | 50MP Camera tripla | 6000 mAh Bateria | 5nm Octa-Core Processador | Android 13",
+        price: 14000,
+        images: [
+          { path: "https://m.media-amazon.com/images/I/817WWpaFo1L._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/81KkF-GngHL._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/61IrdBaOhbL._SX679_.jpg", default: 0 },
+          { path: "https://images-eu.ssl-images-amazon.com/images/G/31/img23/Wireless/Samsung/CatPage/Tiles/June/xcm_banners_m14_5g_rv1_580x800_in-en.jpg", default: 1 },
+        ],
+        color: "Prata",
+        size: "4 GB RAM 128GB Armazenamento",
+      },
+      {
+        name: "Realme narzo N55 (Azul, 4GB+64GB)",
+        price: 10999,
+        images: [
+          { path: "https://m.media-amazon.com/images/I/41Iyj5moShL._SX300_SY300_QL70_FMwebp_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/61og60CnGlL._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/61twx1OjYdL._SX679_.jpg", default: 0 },
+          { path: "https://images-eu.ssl-images-amazon.com/images/G/31/tiyesum/N55/June/xcm_banners_2022_in_bau_wireless_dec_580x800_v1-n55-marchv2-mayv3-v4_580x800_in-en.jpg", default: 1 },
+        ],
+        color: "Azul",
+        size: "4GB RAM 64GB Armazenamento"
+      },
+      {
+        name: "Oppo Enco Air3 Pro",
+        price: 7500,
+        offerPrice: 4500,
+        images: [
+          { path: "https://m.media-amazon.com/images/I/61a2y1FCAJL._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/71DOcYgHWFL._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/71LhLZGHrlL._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/61Rgefy4ndL._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/61a2y1FCAJL._AC_UL640_FMwebp_QL65_.jpg", default: 1 },
+        ],
+        color: "Verde",
+        size: "Normal",
+      },
+      {
+        name: "Fastrack Limitless FS1 Pro Smart Watch",
+        price: 7955,
+        offerPrice: 3495,
+        images: [
+          { path: "https://m.media-amazon.com/images/I/71h2K2OQSIL._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/71BlkyWYupL._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/71c1tSIZxhL._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/41mQKmbkVWL._AC_SY400_.jpg", default: 1 },
+        ],
+        color: "Preto",
+        size: "Normal",
+      },
+      {
+        name: "Aishwariya System On Ear Wireless On Ear Bluetooth Headphones",
+        price: 7955,
+        offerPrice: 3495,
+        images: [
+          { path: "https://m.media-amazon.com/images/I/41t7Wa+kxPL.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/41t7Wa+kxPL._AC_SY400_.jpg", default: 1 },
+        ],
+        color: "Preto",
+        size: "Normal",
+      },
+      {
+        name: "Fastrack Limitless FS1 Pro Smart Watch|1.96 Super AMOLED Arched Display with 410x502 Pixel Resolution|SingleSync BT Calling|NitroFast Charging|110+ Sports Modes|200+ Watchfaces|Upto 7 Days Battery",
+        price: 24999,
+        offerPrice: 19999,
+        images: [
+          { path: "https://m.media-amazon.com/images/I/41bLD50sZSL._SX300_SY300_QL70_FMwebp_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/616pTr2KJEL._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/71wSGO0CwQL._SX679_.jpg", default: 0 },
+          { path: "https://m.media-amazon.com/images/I/71k3gOik46L._AC_SY400_.jpg", default: 1 },
+        ],
+        color: "Azul",
+        size: "8GB RAM, 128GB Armazenamento",
+      }
+    ]
+
+    products.map(async (item) => {
+
+      const product = {
+        name: item.name,
+        price: item.price,
+        offerPrice: item.offerPrice ? item.offerPrice : null
+      }
+
+    
+    })
+  }
 }
 
 //Início das rotas
