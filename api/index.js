@@ -64,7 +64,7 @@ const insertCategories = async () => {
       { name: "Roupas femininas" },
     ]
 
-    db('categores')
+    await db('categories')
       .insert(categories)
   }
 }
