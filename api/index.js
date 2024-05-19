@@ -59,7 +59,7 @@ const generateSecretKey = () => {
 const insertCategories = async () => {
   const categoriesQtd = await db('categories').count('id as quantity')
   if(categoriesQtd[0].quantity === 0){
-    const categories = [
+    const items = [
       { name: "Roupas masculinas" },
       { name: "Jóias" },
       { name: "Eletrônicos" },
@@ -67,7 +67,7 @@ const insertCategories = async () => {
     ]
 
     await db('categories')
-      .insert(categories)
+      .insert(items)
 
     categories = await db('categories')
 
@@ -189,7 +189,7 @@ const insertProducts = async () => {
         offerPrice: item.offerPrice ? item.offerPrice : null
       }
 
-    
+
     })
   }
 }
