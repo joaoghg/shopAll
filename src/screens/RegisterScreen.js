@@ -4,6 +4,7 @@ import {MaterialIcons} from "@expo/vector-icons";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import axios from "axios";
 import {AuthContext} from "../contexts/Auth";
+import { ScrollView } from "react-native";
 
 export default function RegisterScreen({ navigation }){
 
@@ -69,7 +70,7 @@ export default function RegisterScreen({ navigation }){
         />
       </View>
 
-      <KeyboardAvoidingView>
+      <ScrollView>
         <View style={{ alignItems: 'center' }}>
           <Text style={styles.textLogin}>Cadastre-se</Text>
         </View>
@@ -146,7 +147,7 @@ export default function RegisterScreen({ navigation }){
         >
           <Text style={{ textAlign: 'center', color: 'gray', fontSize: 16 }}>Já possui uma conta? Entrar</Text>
         </Pressable>
-      </KeyboardAvoidingView>
+      </ScrollView>
     </View>
   )
 }
