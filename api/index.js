@@ -187,18 +187,124 @@ const insertProducts = async () => {
         categorieId: categories.find(item => item.name === "Eletrônicos").id
       },
       {
-        name: "Fastrack Limitless FS1 Pro Smart Watch|1.96 Super AMOLED Arched Display with 410x502 Pixel Resolution|SingleSync BT Calling|NitroFast Charging|110+ Sports Modes|200+ Watchfaces|Upto 7 Days Battery",
-        price: 24999,
-        offerPrice: 19999,
+        name: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+        price: 109.95,
         images: [
-          { path: "https://m.media-amazon.com/images/I/41bLD50sZSL._SX300_SY300_QL70_FMwebp_.jpg", default: 0 },
-          { path: "https://m.media-amazon.com/images/I/616pTr2KJEL._SX679_.jpg", default: 0 },
-          { path: "https://m.media-amazon.com/images/I/71wSGO0CwQL._SX679_.jpg", default: 0 },
-          { path: "https://m.media-amazon.com/images/I/71k3gOik46L._AC_SY400_.jpg", default: 1 },
+          { path: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg", default: 1 },
+        ],
+        color: "Preto",
+        size: "Normal",
+        categorieId: categories.find(item => item.name === "Roupas masculinas").id
+      },
+      {
+        name: "Mens Casual Premium Slim Fit T-Shirts",
+        price: 22.3,
+        images: [
+          { path: "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg", default: 1 },
+        ],
+        color: "Preto e branco",
+        size: "M",
+        categorieId: categories.find(item => item.name === "Roupas masculinas").id
+      },
+      {
+        name: "Mens Cotton Jacket",
+        price: 55.99,
+        images: [
+          { path: "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg", default: 1 },
+        ],
+        color: "Marrom",
+        size: "G",
+        categorieId: categories.find(item => item.name === "Roupas masculinas").id
+      },
+      {
+        name: "Mens Casual Slim Fit",
+        price: 15.99,
+        images: [
+          { path: "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg", default: 1 },
         ],
         color: "Azul",
-        size: "8GB RAM, 128GB Armazenamento",
+        size: "G",
+        categorieId: categories.find(item => item.name === "Roupas masculinas").id
+      },
+      {
+        name: "John Hardy Women's Legends Naga Gold & Silver Dragon Station Chain Bracelet",
+        price: 699,
+        images: [
+          { path: "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg", default: 1 },
+        ],
+        color: "Prata",
+        size: "23cm",
+        categorieId: categories.find(item => item.name === "Jóias").id
+      },
+      {
+        name: "Solid Gold Petite Micropave",
+        price: 168,
+        images: [
+          { path: "https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_.jpg", default: 1 },
+        ],
+        color: "Prata",
+        size: "14",
+        categorieId: categories.find(item => item.name === "Jóias").id
+      },
+      {
+        name: "White Gold Plated Princess",
+        price: 25,
+        images: [
+          { path: "https://fakestoreapi.com/img/71YAIFU48IL._AC_UL640_QL65_ML3_.jpg", default: 1 },
+        ],
+        color: "Prata",
+        size: "13",
+        categorieId: categories.find(item => item.name === "Jóias").id
+      },
+      {
+        name: "Pierced Owl Rose Gold Plated Stainless Steel Double",
+        price: 11,
+        images: [
+          { path: "https://fakestoreapi.com/img/51UDEzMJVpL._AC_UL640_QL65_ML3_.jpg", default: 1 },
+        ],
+        color: "Rosa",
+        size: "13",
+        categorieId: categories.find(item => item.name === "Jóias").id
+      },
+      {
+        name: "WD 2TB Elements Portable External Hard Drive - USB 3.0",
+        price: 64,
+        images: [
+          { path: "https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg", default: 1 },
+        ],
+        color: "Preto",
+        size: "2TB",
         categorieId: categories.find(item => item.name === "Eletrônicos").id
+      },
+      {
+        name: "SanDisk SSD PLUS 1TB Internal SSD - SATA III 6 Gb/s",
+        price: 109,
+        images: [
+          { path: "https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_.jpg", default: 1 },
+        ],
+        color: "Preto",
+        size: "1TB",
+        categorieId: categories.find(item => item.name === "Eletrônicos").id
+      },
+      {
+        name: "BIYLACLESEN Women's 3-in-1 Snowboard Jacket Winter Coats",
+        price: 59.99,
+        images: [
+          { path: "https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg", default: 1 },
+        ],
+        color: "Roxo",
+        size: "P",
+        categorieId: categories.find(item => item.name === "Roupas femininas").id
+      },
+      {
+        name: "Rain Jacket Women Windbreaker Striped Climbing Raincoats",
+        price: 40,
+        images: [
+          { path: "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg", default: 1 },
+        ],
+        color: "Azul",
+        size: "P",
+        categorieId: categories.find(item => item.name === "Roupas femininas").id
       },
     ]
 
