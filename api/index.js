@@ -313,9 +313,28 @@ const insertProducts = async () => {
       const product = {
         name: item.name,
         price: item.price,
-        offerPrice: item.offerPrice ? item.offerPrice : null
+        offerPrice: item.offerPrice ? item.offerPrice : null,
+        color: item.color,
+        size: item.size,
+        categorieId: item.categorieId
       }
 
+      const prd = await db('products')
+        .insert(product)
+
+      const id = prd[0]
+
+      item.images.map(async (img) => {
+
+        const image = {
+          productId: id,
+          path: img.path,
+          default: img.default
+        }
+
+        await db('product_images')
+          .insert(image)
+      })
 
     })
   }
@@ -474,7 +493,7 @@ app.post("/orders", (req, res) => {
       await trx('orders')
         .insert(order)
 
-      const orderId = trx.select('id')
+      const orderId = await trx.select('id')
         .from('orders')
         .orderBy('id', 'desc')
         .first()
