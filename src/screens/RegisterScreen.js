@@ -19,7 +19,7 @@ export default function RegisterScreen({ navigation }){
 
   const handleRegister = () => {
 
-    if(nome === '' || email === '' || senha === ''){
+    if(nome.trim() === '' || email.trim() === '' || senha.trim() === ''){
       Alert.alert("Atenção", "Preencha todas as informações")
       return false
     }
@@ -30,9 +30,9 @@ export default function RegisterScreen({ navigation }){
     }
 
     const user = {
-      name: nome,
-      email: email,
-      password: senha
+      name: nome.trim(),
+      email: email.trim(),
+      password: senha.trim()
     }
 
     axios.post(`${auth.server}/register`, user)

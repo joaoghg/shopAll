@@ -33,14 +33,14 @@ export default function LoginScreen({ navigation }){
 
 
   const handleLogin = () => {
-    if(email === "" || senha === ""){
+    if(email.trim() === "" || senha.trim() === ""){
       Alert.alert("Atenção", "Informe o email e a senha")
       return false
     }
 
     const user = {
-      email: email,
-      password: senha
+      email: email.trim(),
+      password: senha.trim()
     }
 
     axios.post(`${auth.server}/login`, user)
@@ -104,10 +104,6 @@ export default function LoginScreen({ navigation }){
             />
           </View>
         </View>
-
-        {/*<View style={{ marginTop: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
-          <Text style={{ color: '#007FFF', fontWeight: "500" }}>Esqueceu a senha?</Text>
-        </View>*/}
 
         <View style={{ marginTop: 80 }} />
 
