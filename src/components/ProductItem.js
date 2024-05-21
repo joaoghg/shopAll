@@ -18,7 +18,7 @@ export default function ProductItem({item}){
 
   return(
     <Pressable style={styles.productPressable}>
-      <Image source={{uri: item?.image}}
+      <Image source={{uri: item?.images[0].path}}
         style={styles.productImage}
       />
 
@@ -26,7 +26,7 @@ export default function ProductItem({item}){
 
       <View style={styles.priceView}>
         <Text style={styles.price}>R$ {item?.price}</Text>
-        <Text style={styles.rating}>{item?.rating?.rate} Avaliação</Text>
+        <Text style={styles.rating}>Em estoque</Text>
       </View>
 
       <Pressable
