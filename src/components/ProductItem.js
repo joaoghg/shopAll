@@ -2,11 +2,13 @@ import React, {useState} from "react";
 import {View, StyleSheet, Text, Pressable, Image} from "react-native";
 import {useDispatch} from "react-redux";
 import {addToCart} from "../redux/CartReducer";
+import {useNavigation} from "@react-navigation/native";
 
 export default function ProductItem({item}){
 
   const dispatch = useDispatch()
   const [addedToCart, setAddedToCart] = useState(false);
+  const navigation = useNavigation()
 
   const addItemToCart = (item) => {
     setAddedToCart(true)
@@ -17,7 +19,19 @@ export default function ProductItem({item}){
   }
 
   return(
-    <Pressable style={styles.productPressable}>
+    <Pressable style={styles.productPressable}
+      onPress={() => navigation.navigate("Info", {
+       id: item.id,
+       title: item.title,
+       price: item?.price,
+       carouselImages: item.images,
+       color: item?.color,
+       size: item?.size,
+       oldPrice: item?.oldPrice,
+       item: item,
+       offer: item?.offer
+      })}
+    >
       <Image source={{uri: item?.images[0].path}}
         style={styles.productImage}
       />
