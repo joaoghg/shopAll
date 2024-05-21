@@ -59,9 +59,9 @@ export default function HomeScreen({ navigation }){
   ]
 
   const images = [
-    "https://img.etimg.com/thumb/msid-93051525,width-1070,height-580,imgsize-2243475,overlay-economictimes/photo.jpg",
-    "https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wireless/devjyoti/PD23/Launches/Updated_ingress1242x550_3.gif",
-    "https://images-eu.ssl-images-amazon.com/images/G/31/img23/Books/BB/JULY/1242x550_Header-BB-Jul23.jpg",
+    "https://img.freepik.com/psd-gratuitas/modelo-de-banner-para-mega-venda_23-2148729530.jpg?t=st=1716257566~exp=1716261166~hmac=febd41d7fe782997e22b8d46dbc759479e3914adcc56a759b642cc4ae91deffc&w=1380",
+    "https://img.freepik.com/vetores-gratis/fundo-gradiente-de-venda_23-2148951073.jpg?t=st=1716257797~exp=1716261397~hmac=7944bf0eee19b819aed86c406f651756f7d8a7a9a166e802feb88f077344cf63&w=1380",
+    "https://img.freepik.com/psd-gratuitas/design-de-modelo-de-joias_23-2150694444.jpg?t=st=1716257876~exp=1716261476~hmac=d9065b9d11aef06c02bfb638cfd3a5b573fecdd9b2254bdc7d975443072f41b1&w=1380",
   ]
 
   const [products, setProducts] = useState([]);
