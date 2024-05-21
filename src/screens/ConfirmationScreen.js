@@ -15,10 +15,10 @@ export default function ConfirmationScreen({ navigation }){
   const dispatch = useDispatch()
 
   const steps = [
-    { title: "Endereço", content: "Address Form" },
-    { title: "Entrega", content: "Delivery Options" },
-    { title: "Pagamento", content: "Payment Details" },
-    { title: "Finalizar", content: "Order Summary" },
+    { title: "Endereço" },
+    { title: "Entrega" },
+    { title: "Pagamento" },
+    { title: "Finalizar" },
   ];
 
   const insets = useSafeAreaInsets()
@@ -99,7 +99,12 @@ export default function ConfirmationScreen({ navigation }){
           >
             {steps.map((step, index) => {
               return (
-                <View
+                <Pressable
+                  onPress={() => {
+                    if(index < currentStep){
+                      setCurrentStep(index)
+                    }
+                  }}
                   key={index}
                   style={{
                     justifyContent: 'center',
@@ -131,7 +136,7 @@ export default function ConfirmationScreen({ navigation }){
                     )}
                   </View>
                   <Text style={{textAlign: 'center', marginTop: 8}}>{step.title}</Text>
-                </View>
+                </Pressable>
               )
             })}
           </View>
@@ -342,7 +347,7 @@ export default function ConfirmationScreen({ navigation }){
           </View>
         )}
 
-        {currentStep === 3 && selectedOption === "cash" && (
+        {currentStep === 3 && (
           <View
             style={{
               marginHorizontal: 20
@@ -412,7 +417,7 @@ export default function ConfirmationScreen({ navigation }){
             >
               <Text style={{fontSize: 16, color: 'gray'}}>Pagamento</Text>
 
-              <Text style={{fontSize: 16, fontWeight: "600", marginTop: 7}}>Pagamento na entrega</Text>
+              <Text style={{fontSize: 16, fontWeight: "600", marginTop: 7}}>{selectedOption === "cash" ? "Pagamento na entrega" : "Cartão"}</Text>
             </View>
 
             <Pressable
