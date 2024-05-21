@@ -49,7 +49,7 @@ export default function ProductInfoScreen(){
           return (
             <ImageBackground
               key={index}
-              source={{uri:item}}
+              source={{uri:item.path}}
               style={styles.backgroundImage}
             >
               <View
@@ -60,12 +60,12 @@ export default function ProductInfoScreen(){
                   justifyContent: 'space-between'
                 }}
               >
-                {product?.offer && (
+                {product?.offerPrice && (
                   <View
                     style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 20,
+                      width: 50,
+                      height: 50,
+                      borderRadius: 30,
                       backgroundColor: '#C60C30',
                       justifyContent: 'center',
                       alignItems: 'center',
@@ -80,7 +80,7 @@ export default function ProductInfoScreen(){
                         fontSize: 12
                       }}
                     >
-                      - {product?.offer}
+                      - {Number(((product.price - product.offerPrice) / product.price) * 100).toFixed(2)}%
                     </Text>
                   </View>
                 )}
@@ -95,7 +95,19 @@ export default function ProductInfoScreen(){
       >
         <Text style={styles.prdTitle}>{product?.title}</Text>
 
-        <Text style={styles.price}>R$ {product?.price}</Text>
+        {product.offerPrice ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              gap: 10
+            }}
+          >
+            <Text style={[styles.price, { color: 'red', textDecorationLine: 'line-through' }]}>R$ {product?.price}</Text>
+            <Text style={styles.price}>R$ {product?.offerPrice}</Text>
+          </View>
+        ) : (
+          <Text style={styles.price}>R$ {product?.price}</Text>
+        )}
       </View>
 
       <Text style={{ height: 1, borderColor: '#D0D0D0', borderWidth: 1 }}></Text>

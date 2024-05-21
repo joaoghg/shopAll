@@ -208,9 +208,8 @@ export default function HomeScreen({ navigation }){
                     carouselImages: item.images,
                     color: item?.color,
                     size: item?.size,
-                    oldPrice: item?.oldPrice,
-                    item: item,
-                    offer: item?.offer
+                    offerPrice: item?.offerPrice,
+                    item: item
                   })}
                   key={index}
                   style={{
@@ -248,6 +247,7 @@ export default function HomeScreen({ navigation }){
 
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             {products.slice(4, 8).map((item, index) => {
+
               return (
                 <Pressable key={index}
                   onPress={() => navigation.navigate("Info", {
@@ -257,9 +257,8 @@ export default function HomeScreen({ navigation }){
                     carouselImages: item.images,
                     color: item?.color,
                     size: item?.size,
-                    oldPrice: item?.oldPrice,
-                    item: item,
-                    offer: item?.offer
+                    offerPrice: item?.offerPrice,
+                    item: item
                   })}
                   style={{
                   marginVertical: 10,
@@ -290,7 +289,7 @@ export default function HomeScreen({ navigation }){
                       fontSize: 13,
                       fontWeight: 'bold'
                     }}>
-                      {item?.offer} de desconto
+                      {Number(((item.price - item.offerPrice) / item.price) * 100).toFixed(2)}% de desconto
                     </Text>
                   </View>
                 </Pressable>

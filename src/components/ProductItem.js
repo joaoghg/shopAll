@@ -27,9 +27,8 @@ export default function ProductItem({item}){
        carouselImages: item.images,
        color: item?.color,
        size: item?.size,
-       oldPrice: item?.oldPrice,
-       item: item,
-       offer: item?.offer
+       offerPrice: item?.offerPrice,
+       item: item
       })}
     >
       <Image source={{uri: item?.images[0].path}}
