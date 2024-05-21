@@ -197,21 +197,16 @@ export default function HomeScreen({ navigation }){
   const [products, setProducts] = useState([]);
   const [open, setOpen] = useState(false);
   const [addresses, setAddresses] = useState([])
-  const [category, setCategory] = useState("jewelery");
+  const [category, setCategory] = useState("");
   const [selectedAddress, setSelectedAddress] = useState("")
-  const [items, setItems] = useState([
-    { label: "Men's clothing", value: "men's clothing" },
-    { label: "jewelery", value: "jewelery" },
-    { label: "electronics", value: "electronics" },
-    { label: "women's clothing", value: "women's clothing" },
-  ]);
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
 
     const fetchData = async () => {
       try{
-        const response = await axios.get('https://fakestoreapi.com/products')
-        setProducts(response.data)
+        const response = await axios.get(`${server}/products`)
+        setProducts(response.data.products)
       }catch(error){
         console.log("Erro", error)
       }
@@ -220,6 +215,22 @@ export default function HomeScreen({ navigation }){
     fetchData()
 
   }, []);
+
+  useEffect(() => {
+
+    const fetchCategories = async () => {
+      try{
+        const response = await axios.get(`${server}/categories`)
+        setItems(response.data.categories)
+      }catch(error){
+        console.log("Erro", error)
+      }
+    }
+
+    fetchCategories()
+
+  }, []);
+
 
   const cart = useSelector(state => state.cart.cart)
   const [modalVisible, setModalVisible] = useState(false);
@@ -452,7 +463,7 @@ export default function HomeScreen({ navigation }){
           </View>
 
           <View style={styles.productsView}>
-            {products?.filter((item) => item.category === category)
+            {products.slice(8)?.filter((item) => item.categorieId === category)
               .map((item, index) => {
                 return (
                   <ProductItem item={item} key={index} />

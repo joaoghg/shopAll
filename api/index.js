@@ -66,7 +66,7 @@ const insertCategories = async () => {
     ]
 
     await db('categories')
-      .insert(items)    
+      .insert(items)
   }
 
   categories = await db.select().table('categories')
@@ -552,3 +552,41 @@ app.get("/profile/:userId", async (req, res) => {
     res.status(500).json({ message: "Erro buscando o usuário" });
   }
 });
+
+//Buscando categorias
+app.get("/categories", (req, res) => {
+  try{
+    if(categories.length === 0){
+      throw new Error()
+    }
+
+    const arrCategories = []
+    categories.map(item => {
+      arrCategories.push({label: item.name, value: item.id})
+    })
+
+    res.status(200).json({ categories: arrCategories })
+  }catch (error){
+    res.status(500).json({ message: 'Erro ao carregar categorias' })
+  }
+})
+
+//Buscando produtos
+app.get("/products", async (req, res) => {
+  try{
+    const response = await db('products')
+
+    const products = []
+    for (const item of response) {
+      const images = await db('product_images')
+        .where('productId', item.id)
+
+      item['images'] = images
+      products.push(item)
+    }
+
+    res.status(200).json({products})
+  }catch (error){
+    res.status(500).json({ message: "Erro ao buscar produtos" })
+  }
+})
