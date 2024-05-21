@@ -203,7 +203,7 @@ export default function HomeScreen({ navigation }){
                 <Pressable
                   onPress={() => navigation.navigate("Info", {
                     id: item.id,
-                    title: item.title,
+                    name: item.name,
                     price: item?.price,
                     carouselImages: item.images,
                     color: item?.color,
@@ -252,7 +252,7 @@ export default function HomeScreen({ navigation }){
                 <Pressable key={index}
                   onPress={() => navigation.navigate("Info", {
                     id: item.id,
-                    title: item.title,
+                    name: item.name,
                     price: item?.price,
                     carouselImages: item.images,
                     color: item?.color,

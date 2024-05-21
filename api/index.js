@@ -499,11 +499,14 @@ app.post("/orders", (req, res) => {
         .first()
 
       const products = cartItems.map(item => ({
-        name: item?.title,
+        name: item.name,
         quantity: item.quantity,
-        price: item.price,
-        orderId: orderId
+        price: item.offerPrice ? item.offerPrice : item.price,
+        orderId: orderId.id,
+        productId: item.id
       }))
+
+      console.log(products)
 
       await trx('order_products')
         .insert(products)

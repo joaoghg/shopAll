@@ -10,7 +10,7 @@ export default function CartScreen({ navigation }){
 
   const insets = useSafeAreaInsets()
   const cart = useSelector(state => state.cart.cart)
-  const total = cart?.map(item => item.price * item.quantity)
+  const total = cart?.map(item => (item.offerPrice ? item.offerPrice : item.price) * item.quantity)
     .reduce((current, prev) => current + prev, 0)
 
   const dispatch = useDispatch()
@@ -123,8 +123,8 @@ export default function CartScreen({ navigation }){
                   </View>
 
                   <View>
-                    <Text numberOfLines={3} style={{width: 150, marginTop: 10}}>{item?.title}</Text>
-                    <Text style={{fontSize: 18,fontWeight: 'bold', marginTop: 6}}>R$ {item?.price}</Text>
+                    <Text numberOfLines={3} style={{width: 150, marginTop: 10}}>{item?.name}</Text>
+                    <Text style={{fontSize: 18,fontWeight: 'bold', marginTop: 6}}>R$ {item.offerPrice ? item.offerPrice : item.price}</Text>
                     <Text style={{color: 'green', marginTop: 6}}>Em estoque</Text>
                   </View>
                 </Pressable>

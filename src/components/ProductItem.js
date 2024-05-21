@@ -22,7 +22,7 @@ export default function ProductItem({item}){
     <Pressable style={styles.productPressable}
       onPress={() => navigation.navigate("Info", {
        id: item.id,
-       title: item.title,
+       name: item.name,
        price: item?.price,
        carouselImages: item.images,
        color: item?.color,
@@ -35,7 +35,7 @@ export default function ProductItem({item}){
         style={styles.productImage}
       />
 
-      <Text numberOfLines={1} style={styles.productTitle}>{item?.title}</Text>
+      <Text numberOfLines={1} style={styles.productTitle}>{item?.name}</Text>
 
       <View style={styles.priceView}>
         <Text style={styles.price}>R$ {item?.price}</Text>

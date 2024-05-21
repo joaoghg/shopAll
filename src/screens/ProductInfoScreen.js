@@ -93,7 +93,7 @@ export default function ProductInfoScreen(){
       <View
         style={styles.infoView}
       >
-        <Text style={styles.prdTitle}>{product?.title}</Text>
+        <Text style={styles.prdTitle}>{product?.name}</Text>
 
         {product.offerPrice ? (
           <View
@@ -152,7 +152,7 @@ export default function ProductInfoScreen(){
             marginVertical: 5
           }}
         >
-          Total: R$ {product?.price}
+          Total: R$ {product.offerPrice ? product.offerPrice : product.price}
         </Text>
       </View>
 

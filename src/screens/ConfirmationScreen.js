@@ -7,12 +7,14 @@ import {UserType} from "../contexts/UserContext";
 import {Entypo, FontAwesome6, MaterialIcons} from '@expo/vector-icons';
 import {useDispatch, useSelector} from "react-redux";
 import {clearCart} from "../redux/CartReducer";
+import { useIsFocused } from '@react-navigation/native';
 
 export default function ConfirmationScreen({ navigation }){
 
   const { server } = useContext(AuthContext)
   const { userId } = useContext(UserType)
   const dispatch = useDispatch()
+  const isFocused = useIsFocused();
 
   const steps = [
     { title: "Endereço" },
@@ -30,12 +32,23 @@ export default function ConfirmationScreen({ navigation }){
   const [selectedOption, setSelectedOption] = useState("");
 
   const cart = useSelector(state => state.cart.cart)
-  const total = cart?.map(item => item.price * item.quantity)
+  const total = cart?.map(item => (item.offerPrice ? item.offerPrice : item.price) * item.quantity)
     .reduce((current, prev) => current + prev, 0)
 
   useEffect(() => {
     fetchAddresses()
   }, [])
+
+  useEffect(() => {
+
+    setCurrentStep(0);
+    setAddresses([]);
+    setSelectedAddress("");
+    setOption(false);
+    setSelectedOption("");
+
+  }, [isFocused]);
+
 
   const fetchAddresses = async () => {
     try{
