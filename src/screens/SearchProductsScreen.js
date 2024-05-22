@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect} from "react";
-import {View, StyleSheet, Text, ScrollView, Pressable, TextInput, Alert} from "react-native";
+import {View, StyleSheet, Text, ScrollView, Pressable, TextInput, Alert, FlatList} from "react-native";
 import MainHeader from "../components/MainHeader";
 import axios from "axios";
 import { AuthContext } from "../contexts/Auth";
@@ -127,7 +127,21 @@ export default function SearchProductsScreen({ navigation, route }){
           </View>
 
           <ScrollView>
-
+            <FlatList
+              data={categories}
+              renderItem={({item}) => {
+                return (
+                  <View
+                    style={{
+                      padding: 8
+                    }}
+                  >
+                    <Text style={{ fontSize: 16 }} numberOfLines={1}>{item.label}</Text>
+                  </View>
+                )
+              }}
+              keyExtractor={item => item.value}
+            />
           </ScrollView>
 
         </ModalContent>

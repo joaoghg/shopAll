@@ -39,20 +39,7 @@ export default function ProfileScreen({ navigation }){
       }
     }
 
-    const fetchOrders = async () => {
-      try{
-        const response = await axios.post(`${server}/orders/${userId}`)
-
-        const { orders } = response.data
-        setOrders(orders)
-        setLoading(false)
-      }catch (error){
-        console.log(error)
-      }
-    }
-
     fetchUserProfile()
-    fetchOrders()
 
   }, [])
 
