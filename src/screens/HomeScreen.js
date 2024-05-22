@@ -158,7 +158,7 @@ export default function HomeScreen({ navigation }){
 
             <Pressable>
               {selectedAddress ? (
-                <Text style={styles.locationText}>Enviar para {selectedAddress?.name} - {selectedAddress?.street}</Text>
+                <Text numberOfLines={1} style={styles.locationText}>Enviar para {selectedAddress?.name} - {selectedAddress?.street}</Text>
               ) : (
                 <Text style={styles.locationText}>Selecione um endereço</Text>
               )}
@@ -453,7 +453,8 @@ const styles = StyleSheet.create({
   },
   locationText: {
     fontSize: 15,
-    fontWeight: "500"
+    fontWeight: "500",
+    width: 280
   },
   productsView: {
     flexDirection: 'row',
