@@ -325,8 +325,7 @@ const insertProducts = async () => {
 
       const id = prd[0].id
 
-      item.images.map(async (img) => {
-
+      for(const img of item.images){
         const image = {
           productId: id,
           path: img.path,
@@ -335,7 +334,7 @@ const insertProducts = async () => {
 
         await db('product_images')
           .insert(image)
-      })
+      }
 
     })
   }
