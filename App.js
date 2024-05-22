@@ -12,7 +12,7 @@ export default function App() {
       <Provider store={store}>
         <AuthProvider>
           <UserContext>
-            <StatusBar style={"auto"} />
+            <StatusBar style={"dark"} />
             <StackNavigator />
             <ModalPortal />
           </UserContext>
