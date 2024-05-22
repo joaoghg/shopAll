@@ -19,6 +19,7 @@ import ConfirmationScreen from "../screens/ConfirmationScreen";
 import OrderScreen from "../screens/OrderScreen";
 import SearchProductsScreen from "../screens/SearchProductsScreen";
 import MyOrdersScreen from "../screens/MyOrdersScreen";
+import OrderDetailsScreen from "../screens/OrderDetailsScreen";
 
 export default function StackNavigator(){
   const Stack = createNativeStackNavigator()
@@ -87,6 +88,7 @@ export default function StackNavigator(){
           <Stack.Screen name={"Order"} component={OrderScreen} options={{ headerShown: false }} />
           <Stack.Screen name={"Products"} component={SearchProductsScreen} options={{ headerShown: false }} />
           <Stack.Screen name={"MyOrders"} component={MyOrdersScreen} options={{ headerShown: false }} />
+          <Stack.Screen name={"OrderDetails"} component={OrderDetailsScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
