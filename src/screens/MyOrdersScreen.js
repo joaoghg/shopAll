@@ -34,6 +34,18 @@ export default function MyOrdersScreen({ navigation }){
 
   }, [])
 
+  const formatDate = (date) => {
+    const newDate = new Date(date)
+
+    const options = {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    };
+
+    return newDate.toLocaleDateString('pt-BR', options);
+  }
+
   return (
     <View
       style={{
@@ -61,18 +73,6 @@ export default function MyOrdersScreen({ navigation }){
         data={orders}
         keyExtractor={item => item.id}
         renderItem={({item}) => {
-
-          const formatDate = (date) => {
-            const newDate = new Date(date)
-
-            const options = {
-              day: '2-digit',
-              month: 'short',
-              year: 'numeric'
-            };
-
-            return newDate.toLocaleDateString('pt-BR', options);
-          }
 
           return (
             <View

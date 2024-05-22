@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {View, StyleSheet, Text, ScrollView, Pressable, Alert} from "react-native";
+import {View, StyleSheet, Text, ScrollView, Pressable, Alert, Image} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {AuthContext} from "../contexts/Auth";
 import axios from "axios";
@@ -34,6 +34,18 @@ export default function OrderDetailsScreen({ navigation, route }){
 
   }, [])
 
+  const formatDate = (date) => {
+    const newDate = new Date(date)
+
+    const options = {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric'
+    };
+
+    return newDate.toLocaleDateString('pt-BR', options);
+  }
+
   return (
     <View
       style={{
@@ -55,7 +67,65 @@ export default function OrderDetailsScreen({ navigation, route }){
         <Text style={{ fontSize: 18, fontWeight: 'bold' }} >Pedido #{order?.id}</Text>
       </View>
 
-      <ScrollView>
+      <ScrollView
+        style={{
+          marginTop: 20,
+          marginHorizontal: 20
+        }}
+      >
+
+        <View>
+          <Text style={{ fontSize: 18, fontWeight: '500' }}>Data</Text>
+          <Text style={{ fontSize: 16 }}>{formatDate(order?.createdAt.substring(0, 10))}</Text>
+        </View>
+
+        <Text style={{ borderWidth: 0.5, borderColor: '#D0D0D0', height: 1, marginVertical: 10 }} />
+
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center'
+          }}
+        >
+          <Text style={{ fontSize: 18, fontWeight: '500' }}>Pagamento: </Text>
+          <Text style={{ fontSize: 16 }}>{order?.paymentMethod === 'card' ? "Cartão" : "Dinheiro"}</Text>
+        </View>
+
+        <Text style={{ borderWidth: 0.5, borderColor: '#D0D0D0', height: 1, marginVertical: 10 }} />
+
+        <View>
+          <Text style={{ fontSize: 18, fontWeight: '500' }}>Endereço</Text>
+          <Text style={{ fontSize: 16 }}>{order?.street}{order?.landmark && `, ${order.landmark}`}</Text>
+          <Text style={{ fontSize: 16 }}>{order?.neighborhood}, CEP: {order?.cep}</Text>
+          <Text style={{ fontSize: 16 }}>{order?.city}, {order?.state}</Text>
+        </View>
+
+        <Text style={{ borderWidth: 0.5, borderColor: '#D0D0D0', height: 1, marginVertical: 10 }} />
+
+        <View>
+          <Text style={{ fontSize: 18, fontWeight: '500' }}>Produtos</Text>
+          {order?.products.map((item, index) => {
+            return (
+              <View
+                key={index}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                {/*<Image
+                  source={{ uri: item.images }}
+                  style={{
+                    resizeMode: 'contain',
+                    width: 140,
+                    height: 140
+                  }}
+                />*/}
+              </View>
+            )
+          })}
+        </View>
 
       </ScrollView>
     </View>

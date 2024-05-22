@@ -553,8 +553,21 @@ app.get("/orderDetails/:orderId", async (req, res) => {
       return res.status(404).json({ message: "Pedido não encontrado" })
     }
 
-    const products = await db('order_products')
+    const response = await db('order_products')
+      .innerJoin('products', 'products.id', 'order_products.productId')
       .where('orderId', orderId)
+
+    const products = []
+    for(const prd of response){
+
+      const product = {...prd}
+
+      const images = await db('product_images')
+        .where('productId', product.productId)
+
+      product['images'] = images
+      products.push(product)
+    }
 
     order['products'] = products
 
