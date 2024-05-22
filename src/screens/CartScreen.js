@@ -113,7 +113,7 @@ export default function CartScreen({ navigation }){
                 >
                   <View>
                     <Image
-                      source={{uri: item?.images.find(item => item.default === 1).path}}
+                      source={{uri: item?.images.find(item => item.default == 1).path}}
                       style={{
                         width: 140,
                         height: 140,
