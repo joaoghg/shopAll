@@ -54,90 +54,80 @@ export default function MyOrdersScreen({ navigation }){
         <Text style={{ fontSize: 18, fontWeight: 'bold' }} >Meus Pedidos</Text>
       </View>
 
-      {orders.length > 0 ? (
-        <FlatList
-          style={{
-            marginVertical: 10,
-          }}
-          data={orders}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => {
+      <FlatList
+        style={{
+          marginVertical: 10,
+        }}
+        data={orders}
+        keyExtractor={item => item.id}
+        renderItem={({item}) => {
 
-            const formatDate = (date) => {
-              const newDate = new Date(date)
+          const formatDate = (date) => {
+            const newDate = new Date(date)
 
-              const options = {
-                day: '2-digit',
-                month: 'short',
-                year: 'numeric'
-              };
+            const options = {
+              day: '2-digit',
+              month: 'short',
+              year: 'numeric'
+            };
 
-              return newDate.toLocaleDateString('pt-BR', options);
-            }
+            return newDate.toLocaleDateString('pt-BR', options);
+          }
 
-            return (
+          return (
+            <View
+              style={{
+                borderColor: '#D0D0D0',
+                borderWidth: 1.5,
+                marginHorizontal: 20,
+                borderRadius: 10,
+              }}
+            >
               <View
                 style={{
-                  borderColor: '#D0D0D0',
-                  borderWidth: 1.5,
-                  marginHorizontal: 20,
-                  borderRadius: 10,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  padding: 10,
+                  justifyContent: 'space-between'
                 }}
               >
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    padding: 10,
-                    justifyContent: 'space-between'
-                  }}
+                <Text style={{ fontSize: 16, fontWeight: "500" }}>Número do pedido: {item.id}</Text>
+                <Pressable
+                  onPress={() => navigation.navigate("OrderDetails", { id: item.id })}
                 >
-                  <Text style={{ fontSize: 16, fontWeight: "500" }}>Número do pedido: {item.id}</Text>
-                  <Pressable
-                    onPress={() => navigation.navigate("OrderDetails", { id: item.id })}
-                  >
-                    <AntDesign name="right" size={24} color="black" />
-                  </Pressable>
+                  <AntDesign name="right" size={24} color="black" />
+                </Pressable>
+              </View>
+
+              <View style={{ borderColor: '#D0D0D0', borderWidth: 0.5 }} />
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: 10
+                }}
+              >
+                <View>
+                  <Text style={{ fontSize: 16, fontWeight: "500" }}>Data</Text>
+                  <Text>{formatDate(item.createdAt.substring(0, 10))}</Text>
                 </View>
 
-                <View style={{ borderColor: '#D0D0D0', borderWidth: 0.5 }} />
+                <View>
+                  <Text style={{ fontSize: 16, fontWeight: "500" }}>Valor</Text>
+                  <Text>R$ {new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(item.totalPrice)}</Text>
+                </View>
 
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: 10
-                  }}
-                >
-                  <View>
-                    <Text style={{ fontSize: 16, fontWeight: "500" }}>Data</Text>
-                    <Text>{formatDate(item.createdAt.substring(0, 10))}</Text>
-                  </View>
-
-                  <View>
-                    <Text style={{ fontSize: 16, fontWeight: "500" }}>Valor</Text>
-                    <Text>{new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(item.totalPrice)}</Text>
-                  </View>
-
-                  <View>
-                    <Text style={{ fontSize: 16, fontWeight: "500" }}>Pagamento</Text>
-                    <Text>{item.paymentMethod === 'card' ? 'Cartão' : 'Dinheiro'}</Text>
-                  </View>
+                <View>
+                  <Text style={{ fontSize: 16, fontWeight: "500" }}>Pagamento</Text>
+                  <Text>{item.paymentMethod === 'card' ? 'Cartão' : 'Dinheiro'}</Text>
                 </View>
               </View>
-            )
-          }}
-        />
-      ) : (
-        <View
-          style={{
-            marginTop: 15
-          }}
-        >
-          <Text style={{ fontSize: 16, fontWeight: '500' }}>Nenhum pedido encontrado</Text>
-        </View>
-      )}
+            </View>
+          )
+        }}
+      />
 
     </View>
   )

@@ -534,8 +534,32 @@ app.get("/orders/:userId", async (req,res) => {
       .where('userId', userId)
 
     res.status(200).json({orders})
-  }catch{
+  }catch (error){
     res.status(500).json({message: "Erro ao buscar pedidos"})
+  }
+})
+
+//Rota para buscar detalhes do pedido
+app.get("/orderDetails/:orderId", async (req, res) => {
+  try{
+    const orderId = req.params.orderId
+
+    const order = await db('orders')
+      .innerJoin('addresses', 'orders.addressId', 'addresses.id')
+      .where('id', orderId)
+
+    if(!order){
+      res.status(404).json({ message: "Pedido não encontrado" })
+    }
+
+    const products = await db('order_products')
+      .where('orderId', orderId)
+
+    order['products'] = products
+
+    res.status(200).json({order})
+  }catch(error) {
+    res.status(500).json({ message: "Erro ao buscar pedido" })
   }
 })
 
