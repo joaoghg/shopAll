@@ -341,7 +341,8 @@ const insertProducts = async () => {
 }
 
 const authenticateJWT = (req, res, next) => {
-  const token = req.header('Authorization')?.split(' ')[1];
+  const token = req.header('Authorization');
+  return res.status(500).json({ message: token })
 
   if (token) {
     jwt.verify(token, secretKey, (err, user) => {
