@@ -70,6 +70,7 @@ export default function ProfileScreen({ navigation }){
             }}
           >
             <Pressable
+              onPress={() => navigation.navigate("MyOrders")}
               style={styles.pressables}
             >
               <Text style={{textAlign: 'center'}}>Meus pedidos</Text>
