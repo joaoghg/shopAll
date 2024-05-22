@@ -7,6 +7,7 @@ import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {AntDesign, Entypo, Ionicons, MaterialIcons} from "@expo/vector-icons";
 import ProductItem from "../components/ProductItem";
 import {BottomModal, ModalContent, SlideAnimation} from "react-native-modals";
+import { Checkbox } from 'react-native-paper';
 
 export default function SearchProductsScreen({ navigation, route }){
 
@@ -126,23 +127,35 @@ export default function SearchProductsScreen({ navigation, route }){
             <Text style={{ fontSize: 16, fontWeight: "500" }}>Selecione as categorias</Text>
           </View>
 
-          <ScrollView>
-            <FlatList
-              data={categories}
-              renderItem={({item}) => {
-                return (
-                  <View
-                    style={{
-                      padding: 8
-                    }}
-                  >
-                    <Text style={{ fontSize: 16 }} numberOfLines={1}>{item.label}</Text>
-                  </View>
-                )
-              }}
-              keyExtractor={item => item.value}
-            />
-          </ScrollView>
+          <FlatList
+            data={categories}
+            renderItem={({item}) => {
+              return (
+                <Pressable
+                  onPress={() => {
+                    const newCategories = [...selectedCategories]
+                    if(selectedCategories.includes(item.value)){
+                      newCategories.splice(newCategories.indexOf(item.value), 1)
+                      setSelectedCategories(newCategories)
+                    }
+                    else {
+                      newCategories.push(item.value)
+                      setSelectedCategories(newCategories)
+                    }
+                  }}
+                  style={{
+                    padding: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    backgroundColor: selectedCategories.includes(item.value) ? '#AFEEEE' : 'white'
+                  }}
+                >
+                  <Text style={{ fontSize: 16 }} numberOfLines={1}>{item.label}</Text>
+                </Pressable>
+              )
+            }}
+            keyExtractor={item => item.value}
+          />
 
         </ModalContent>
       </BottomModal>
