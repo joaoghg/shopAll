@@ -34,6 +34,8 @@ export default function OrderDetailsScreen({ navigation, route }){
 
   }, [])
 
+  console.log(order)
+
   const formatDate = (date) => {
     const newDate = new Date(date)
 

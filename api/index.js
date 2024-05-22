@@ -554,7 +554,6 @@ app.get("/orderDetails/:orderId", async (req, res) => {
     }
 
     const response = await db('order_products')
-      .innerJoin('products', 'products.id', 'order_products.productId')
       .where('orderId', orderId)
 
     const products = []
@@ -563,7 +562,7 @@ app.get("/orderDetails/:orderId", async (req, res) => {
       const product = {...prd}
 
       const images = await db('product_images')
-        .where('productId', product.productId)
+        .where('productId', prd.productId)
 
       product['images'] = images
       products.push(product)
