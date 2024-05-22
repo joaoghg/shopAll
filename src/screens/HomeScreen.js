@@ -198,14 +198,14 @@ export default function HomeScreen({ navigation }){
             alignItems: 'center',
             flexWrap: 'wrap'
           }}>
-            {products.slice(0, 4).map((item, index) => {
+            {products?.slice(0, 4).map((item, index) => {
               return (
                 <Pressable
                   onPress={() => navigation.navigate("Info", {
                     id: item.id,
                     name: item.name,
                     price: item?.price,
-                    carouselImages: item.images,
+                    carouselImages: item?.images,
                     color: item?.color,
                     size: item?.size,
                     offerPrice: item?.offerPrice,
@@ -218,7 +218,7 @@ export default function HomeScreen({ navigation }){
                   alignItems: 'center'
                 }}>
                   <Image
-                    source={{uri:item?.images.find(item => item.default === 1).path}}
+                    source={{uri:item?.images.find(item => item.default == 1)?.path}}
                     style={{
                       width:180,
                       height: 180,
@@ -246,7 +246,7 @@ export default function HomeScreen({ navigation }){
           </Text>
 
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            {products.slice(4, 8).map((item, index) => {
+            {products?.slice(4, 8).map((item, index) => {
 
               return (
                 <Pressable key={index}
@@ -266,7 +266,7 @@ export default function HomeScreen({ navigation }){
                   justifyContent: 'center'
                 }}>
                   <Image
-                    source={{uri: item?.images.find(item => item.default === 1).path}}
+                    source={{uri: item?.images.find(item => item.default == 1)?.path}}
                     style={{
                       width: 150,
                       height: 150,
@@ -332,7 +332,7 @@ export default function HomeScreen({ navigation }){
           </View>
 
           <View style={styles.productsView}>
-            {products.slice(8)?.filter((item) => item.categorieId === category)
+            {products?.slice(8).filter((item) => item.categorieId === category)
               .map((item, index) => {
                 return (
                   <ProductItem item={item} key={index} />
