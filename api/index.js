@@ -531,7 +531,6 @@ app.get("/orders/:userId", async (req,res) => {
     }
 
     const orders = await db('orders')
-      .innerJoin('order_products', 'orders.id', 'order_products.orderId')
       .where('userId', userId)
 
     res.status(200).json({orders})
