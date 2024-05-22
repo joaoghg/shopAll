@@ -19,7 +19,7 @@ export default function OrderDetailsScreen({ navigation, route }){
     const fetchOrder = async () => {
       try{
         const response = await axios.get(`${server}/orderDetails/${orderId}`)
-        setOrders(response.data.orders)
+        setOrder(response.data.order)
       }catch (error){
         if(error.response){
           Alert.alert("Erro", error.response.data.message)

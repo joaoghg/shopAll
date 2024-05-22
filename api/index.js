@@ -550,7 +550,7 @@ app.get("/orderDetails/:orderId", async (req, res) => {
       .first()
 
     if(!order){
-      res.status(404).json({ message: "Pedido não encontrado" })
+      return res.status(404).json({ message: "Pedido não encontrado" })
     }
 
     const products = await db('order_products')
@@ -560,7 +560,7 @@ app.get("/orderDetails/:orderId", async (req, res) => {
 
     res.status(200).json({order})
   }catch(error) {
-    res.status(500).json({ message: "Erro ao buscar pedido" })
+    res.status(500).json({ message: `Erro ao buscar pedido, ${error.toString()}` })
   }
 })
 
