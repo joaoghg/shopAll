@@ -1,9 +1,9 @@
 module.exports = {
-  client: 'mysql',
+  client: 'pg',
   connection: {
     database: 'shop_all',
-    user:     'root',
-    password: ''
+    user:     'postgres',
+    password: 'Jg4951393830'
   },
   migrations: {
     tableName: 'knex_migrations'
