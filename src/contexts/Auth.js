@@ -4,7 +4,7 @@ export const AuthContext = createContext({})
 
 export function AuthProvider({ children }) {
 
-  const server = "http://192.168.0.117:8000"
+  const server = "https://shopall-fgr8.onrender.com"
 
   return (
     <AuthContext.Provider value={{ server }}>

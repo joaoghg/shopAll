@@ -43,7 +43,7 @@ const sendVerificationEmail = async (email, verificationToken) => {
     from:"shopAll.com",
     to:email,
     subject:"Verificação de Email",
-    text:`Por favor, clique no link abaixo para verificar seu email : http://192.168.0.117:8000/verify/${verificationToken}`
+    text:`Por favor, clique no link abaixo para verificar seu email : https://shopall-fgr8.onrender.com/verify/${verificationToken}`
   }
 
   try{
