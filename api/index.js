@@ -57,7 +57,7 @@ const generateSecretKey = () => {
 }
 const insertCategories = async () => {
   const categoriesQtd = await db('categories').count('id as quantity')
-  if(categoriesQtd[0].quantity === 0){
+  if(parseInt(categoriesQtd[0].quantity) === 0){
     const items = [
       { name: "Roupas masculinas" },
       { name: "Jóias" },
@@ -74,7 +74,7 @@ const insertCategories = async () => {
 }
 const insertProducts = async () => {
   const productsQtd = await db('products').count('id as quantity')
-  if(productsQtd[0].quantity === 0){
+  if(parseInt(productsQtd[0].quantity) === 0){
 
     const products = [
       {
@@ -320,9 +320,10 @@ const insertProducts = async () => {
       }
 
       const prd = await db('products')
+        .returning('id')
         .insert(product)
 
-      const id = prd[0]
+      const id = prd[0].id
 
       item.images.map(async (img) => {
 
