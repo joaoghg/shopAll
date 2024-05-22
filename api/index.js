@@ -342,11 +342,6 @@ const insertProducts = async () => {
 }
 
 //Início das rotas
-
-app.get("/", (req, res) => {
-  res.status(200).json({mensagem: "Te amo"})
-})
-
 //Rota de registro
 app.post("/register", async (req, res) => {
   try{
