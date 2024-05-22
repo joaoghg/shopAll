@@ -340,6 +340,21 @@ const insertProducts = async () => {
   }
 }
 
+const authenticateJWT = (req, res, next) => {
+  const token = req.header('Authorization')?.split(' ')[1];
+
+  if (token) {
+    jwt.verify(token, secretKey, (err, user) => {
+      if (err) {
+        return res.status(403).json({ message: 'Token inválido' })
+      }
+      next()
+    })
+  } else {
+    res.status(401).json({ message: 'Token não informado' })
+  }
+};
+
 //Início das rotas
 //Rota de registro
 app.post("/register", async (req, res) => {
@@ -413,6 +428,29 @@ app.post("/login", async (req, res) => {
     res.status(500).json({message: "Não foi possível fazer login"})
   }
 })
+
+//Rota para verificar token
+app.get('/token/:token', (req, res) => {
+  try{
+    const token = req.params.token
+
+    if(!token) {
+      res.status(401).json({ message: 'Token inválido' })
+    }
+
+    jwt.verify(token, secretKey, (err, user) => {
+      if (err) {
+        return res.status(403).json({ message: 'Token inválido' })
+      }
+    })
+
+    res.status(200).json({ message: 'Token válido' })
+  }catch(error){
+    res.status(500).json({ message: 'Erro ao validar token' })
+  }
+})
+
+app.use(authenticateJWT)
 
 //Rota para salvar endereço
 app.post("/addresses", async (req, res) => {

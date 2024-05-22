@@ -19,9 +19,11 @@ export default function LoginScreen({ navigation }){
     const checkLoginStatus = async () => {
       try{
         const token = await AsyncStorage.getItem('authToken')
-
         if(token){
-          navigation.replace("Main")
+          const response = await axios.get(`${auth.server}/token/${token}`)
+          if(response.status === 200){
+            navigation.replace("Main")
+          }
         }
       }catch(error){
         console.log(error)
@@ -47,6 +49,7 @@ export default function LoginScreen({ navigation }){
       .then(response => {
         const token = response.data.token
         AsyncStorage.setItem("authToken", token)
+        axios.defaults.headers.common['Authorization'] = token;
         navigation.replace("Main")
       })
       .catch(error => {
