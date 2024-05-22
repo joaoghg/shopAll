@@ -22,6 +22,7 @@ export default function LoginScreen({ navigation }){
         if(token){
           const response = await axios.get(`${auth.server}/token/${token}`)
           if(response.status === 200){
+            axios.defaults.headers.common['Authorization'] = token;
             navigation.replace("Main")
           }
         }
