@@ -52,7 +52,7 @@ export default function OrderDetailsScreen({ navigation, route }){
         >
           <AntDesign name="arrowleft" size={24} color="black" />
         </Pressable>
-        <Text style={{ fontSize: 18, fontWeight: 'bold' }} >Meus Pedidos</Text>
+        <Text style={{ fontSize: 18, fontWeight: 'bold' }} >Pedido #{order?.id}</Text>
       </View>
 
       <ScrollView>

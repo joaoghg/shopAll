@@ -546,7 +546,7 @@ app.get("/orderDetails/:orderId", async (req, res) => {
 
     const order = await db('orders')
       .innerJoin('addresses', 'orders.addressId', 'addresses.id')
-      .where('id', orderId)
+      .where('orders.id', orderId)
       .first()
 
     if(!order){
