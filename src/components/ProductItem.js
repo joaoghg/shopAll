@@ -39,7 +39,6 @@ export default function ProductItem({item}){
 
       <View style={styles.priceView}>
         <Text style={styles.price}>R$ {item?.price}</Text>
-        <Text style={styles.rating}>Em estoque</Text>
       </View>
 
       <Pressable

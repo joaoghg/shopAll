@@ -104,39 +104,6 @@ export default function ProfileScreen({ navigation }){
               <Text style={{textAlign: 'center'}}>Sair</Text>
             </Pressable>
           </View>
-
-          {/*<ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {loading ? (
-              <Text>Loading...</Text>
-            ) : orders.length > 0 ? (
-              orders.map((order) => (
-                <Pressable
-                  style={{
-                    marginTop: 20,
-                    padding: 15,
-                    borderRadius: 8,
-                    borderWidth: 1,
-                    borderColor: "#d0d0d0",
-                    marginHorizontal: 10,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                  key={order.id}
-                >
-                  {order.products.slice(0, 1)?.map((product) => (
-                    <View style={{ marginVertical: 10 }} key={product.id}>
-                      <Image
-                        source={{ uri: product.image }}
-                        style={{ width: 100, height: 100, resizeMode: "contain" }}
-                      />
-                    </View>
-                  ))}
-                </Pressable>
-              ))
-            ) : (
-              <Text>No orders found</Text>
-            )}
-          </ScrollView>*/}
         </View>
 
 
