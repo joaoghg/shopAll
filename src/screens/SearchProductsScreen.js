@@ -4,8 +4,9 @@ import MainHeader from "../components/MainHeader";
 import axios from "axios";
 import { AuthContext } from "../contexts/Auth";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
-import {AntDesign} from "@expo/vector-icons";
+import {AntDesign, Entypo, Ionicons, MaterialIcons} from "@expo/vector-icons";
 import ProductItem from "../components/ProductItem";
+import {BottomModal, ModalContent, SlideAnimation} from "react-native-modals";
 
 export default function SearchProductsScreen({ navigation, route }){
 
@@ -15,8 +16,24 @@ export default function SearchProductsScreen({ navigation, route }){
   const [products, setProducts] = useState([]);
   const [name, setName] = useState("");
   const [categories, setCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
+
+    const searchProducts = async () => {
+      try{
+        const response = await axios.get(`${server}/products`)
+        setProducts(response.data.products)
+      }catch (error){
+        if(error.response){
+          Alert.alert("Erro", error.response.data.message)
+        }
+        else{
+          Alert.alert("Erro", "Não foi possível carregar os produtos")
+        }
+      }
+    }
 
     if(route.params?.name){
       setName(route.params.name)
@@ -25,19 +42,19 @@ export default function SearchProductsScreen({ navigation, route }){
     searchProducts()
   }, [])
 
-  const searchProducts = async () => {
-    try{
-      const response = await axios.get(`${server}/products`)
-      setProducts(response.data.products)
-    }catch (error){
-      if(error.response){
-        Alert.alert("Erro", error.response.data.message)
-      }
-      else{
-        Alert.alert("Erro", "Não foi possível carregar os produtos")
+  useEffect(() => {
+
+    const fetchCategories = async () => {
+      try{
+        const response = await axios.get(`${server}/categories`)
+        setCategories(response.data.categories)
+      }catch (error){
+        console.log(error)
       }
     }
-  }
+
+    fetchCategories()
+  }, [])
 
   return (
     <>
@@ -58,10 +75,21 @@ export default function SearchProductsScreen({ navigation, route }){
           </Pressable>
         </View>
 
+        <Pressable
+          onPress={() => setModalVisible(!modalVisible)}
+          style={styles.categoriesView}
+        >
+          <Pressable>
+            <Text style={styles.categoriesText}>Selecione categorias</Text>
+          </Pressable>
+
+          <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
+        </Pressable>
+
         <ScrollView>
           <View style={styles.productsView}>
-            {products?.filter((item) => name !== "" ? item.name.includes(name) : true)
-              .filter((item) => categories.length > 0 ? categories.includes(item.categorieId) : true)
+            {products?.filter((item) => name !== "" ? item.name.toLowerCase().includes(name.toLowerCase()) : true)
+              .filter((item) => selectedCategories.length > 0 ? selectedCategories.includes(item.categorieId) : true)
               .map((item, index) => {
                 return (
                   <ProductItem item={item} key={index} />
@@ -70,6 +98,40 @@ export default function SearchProductsScreen({ navigation, route }){
           </View>
         </ScrollView>
       </View>
+
+      <BottomModal
+        onBackdropPress={() => setModalVisible(!modalVisible)}
+        swipeDirection={["up", "down"]}
+        swipeThreshold={200}
+        modalAnimation={
+          new SlideAnimation({
+            slideFrom: 'bottom'
+          })
+        }
+        onHardwareBackPress={() => setModalVisible(!modalVisible)}
+        visible={modalVisible}
+        onTouchOutside={() => setModalVisible(!modalVisible)}
+      >
+        <ModalContent
+          style={{
+            width: '100%',
+            height: 400
+          }}
+        >
+          <View
+            style={{
+              marginBottom: 8
+            }}
+          >
+            <Text style={{ fontSize: 16, fontWeight: "500" }}>Selecione as categorias</Text>
+          </View>
+
+          <ScrollView>
+
+          </ScrollView>
+
+        </ModalContent>
+      </BottomModal>
     </>
   )
 
@@ -99,5 +161,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap'
-  }
+  },
+  categoriesView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    padding: 10,
+    backgroundColor: '#AFEEEE',
+    paddingLeft: 25
+  },
+  categoriesText: {
+    fontSize: 15,
+    fontWeight: "500",
+    width: 280
+  },
 })
