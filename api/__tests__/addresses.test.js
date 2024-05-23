@@ -211,4 +211,53 @@ describe("addresses", () => {
 
         expect(response.status).toBe(200)
     })
+    it("Buscando endereços sem usuário", async () => {
+        const hashedPassword = await bcrypt.hash('12345678', 10);
+        await db('users')
+        .insert({
+            name: 'Teste',
+            email: 'test6@address.com',
+            password: hashedPassword,
+            verificationToken: 'token'
+        });
+
+        const ret = await request.post('/login')
+          .send({
+            email: 'test6@address.com',
+            password: '12345678'
+          });
+    
+        const token = ret._body.token
+
+        const response = await request.get('/addresses')
+          .set('Authorization', token)
+
+        expect(response.status).toBe(404)
+    })
+    it("Buscando endereços válido", async () => {
+        const hashedPassword = await bcrypt.hash('12345678', 10);
+        const user = await db('users')
+        .returning('id')
+        .insert({
+            name: 'Teste',
+            email: 'test7@address.com',
+            password: hashedPassword,
+            verificationToken: 'token'
+        });
+
+        const userId = user[0].id
+
+        const ret = await request.post('/login')
+          .send({
+            email: 'test7@address.com',
+            password: '12345678'
+          });
+    
+        const token = ret._body.token
+
+        const response = await request.get(`/addresses/${userId}`)
+          .set('Authorization', token)
+
+        expect(response.status).toBe(200)
+    })
 })
