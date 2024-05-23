@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 //main
-module.exports = {
+/*module.exports = {
   client: 'pg',
   connection: {
     connectionString: 'postgres://joaoghg:ZxyQ0xSijUotAKXCX9rdTumz6YwcNLbI@dpg-cp6m9dmv3ddc73fmn1tg-a.oregon-postgres.render.com/shop_all',
@@ -16,10 +16,10 @@ module.exports = {
   migrations: {
     tableName: 'knex_migrations'
   }
-}
+}*/
 
 //Test
-/*module.exports = {
+module.exports = {
   client: 'pg',
   connection: {
     database: 'shop_all',
@@ -29,5 +29,5 @@ module.exports = {
   migrations: {
     tableName: 'knex_migrations'
   }
-}*/
+}
 
