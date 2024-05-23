@@ -1,4 +1,3 @@
-const express = require("express")
 const bodyParser = require("body-parser")
 const db = require("./config/db")
 const crypto = require("crypto")
@@ -7,7 +6,8 @@ const cors = require("cors")
 const bcrypt = require("bcrypt")
 require('dotenv').config();
 
-const app = express()
+const app = require('./server')
+
 const port = 8000
 let categories
 
