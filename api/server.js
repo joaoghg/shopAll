@@ -131,7 +131,7 @@ app.post("/login", async (req, res) => {
       return res.status(401).json({message: "Credenciais inválidas"})
     }
 
-    const token = jwt.sign({userId: user.id}, secretKey)
+    const token = jwt.sign({userId: user.id}, req.secretKey ? req.secretKey : secretKey)
 
     res.status(200).json({token})
   }catch(error){
@@ -148,7 +148,7 @@ app.get('/token/:token', (req, res) => {
       return res.status(401).json({ message: 'Token inválido' })
     }
 
-    jwt.verify(token, secretKey, (err, user) => {
+    jwt.verify(token, req.secretKey ? req.secretKey : secretKey, (err, user) => {
       if (err) {
         return res.status(403).json({ message: 'Token inválido' })
       }
