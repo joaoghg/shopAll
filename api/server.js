@@ -148,13 +148,17 @@ app.get('/token/:token', (req, res) => {
       return res.status(401).json({ message: 'Token inválido' })
     }
 
+    let userId
+
     jwt.verify(token, req.secretKey ? req.secretKey : secretKey, (err, user) => {
       if (err) {
-        return res.status(403).json({ message: 'Token inválido', userId: user.id })
+        return res.status(403).json({ message: 'Token inválido' })
       }
+
+      userId = user.userId
     })
 
-    res.status(200).json({ message: 'Token válido' })
+    res.status(200).json({ message: 'Token válido', userId })
   }catch(error){
     res.status(500).json({ message: 'Erro ao validar token' })
   }
