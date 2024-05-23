@@ -4,10 +4,6 @@ const supertest = require("supertest");
 
 const request = supertest(app);
 
-beforeAll(async () => {
-  await db.migrate.latest()
-})
-
 describe('POST /register', () => {
   it('Deve registrar um usuário', async () => {
     const response = await request.post('/register')
@@ -52,7 +48,3 @@ describe('POST /register', () => {
     expect(response.status).toBe(404);
   });
 });
-
-afterAll(async () => {
-  await db.destroy();
-})
