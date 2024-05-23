@@ -53,20 +53,92 @@ describe("addresses", () => {
     
         const token = ret._body.token
 
+        const address = {
+            name : 'teste',
+            mobileNumber: '123456789',
+            houseNumber: null,
+            street: 'rua',
+            landmark: 'complemento',
+            cep: '17280000',
+            userId: userId,
+            city: 'cidade',
+            country: 'pais',
+            state: 'estado',
+            neighborhood: 'centro'
+        }
+
         const response = await request.post('/addresses')
-            .send({
-                name : 'teste',
-                mobileNumber: '123456789',
-                houseNumber: null,
-                street: 'rua',
-                landmark: 'complemento',
-                cep: '17280000',
-                userId: userId,
-                city: 'cidade',
-                country: 'pais',
-                state: 'estado',
-                neighborhood: 'centro'
-            })
+            .send({ userId, address })
             .set('Authorization', token)
+
+        expect(response.status).toBe(201)
+    })
+    it("Adicionando endereço sem usuário", async () => {
+        const hashedPassword = await bcrypt.hash('12345678', 10);
+        await db('users')
+        .returning('id')
+        .insert({
+            name: 'Teste',
+            email: 'test2@address.com',
+            password: hashedPassword,
+            verificationToken: 'token'
+        });
+
+        const ret = await request.post('/login')
+          .send({
+            email: 'test2@address.com',
+            password: '12345678'
+          });
+    
+        const token = ret._body.token
+
+        const address = {
+            name : 'teste',
+            mobileNumber: '123456789',
+            houseNumber: null,
+            street: 'rua',
+            landmark: 'complemento',
+            cep: '17280000',
+            userId: null,
+            city: 'cidade',
+            country: 'pais',
+            state: 'estado',
+            neighborhood: 'centro'
+        }
+
+        const response = await request.post('/addresses')
+            .send({ address })
+            .set('Authorization', token)
+
+        expect(response.status).toBe(500)
+    })
+    it("Adicionando endereço inválido", async () => {
+        const hashedPassword = await bcrypt.hash('12345678', 10);
+        const user = await db('users')
+        .returning('id')
+        .insert({
+            name: 'Teste',
+            email: 'test3@address.com',
+            password: hashedPassword,
+            verificationToken: 'token'
+        });
+
+        const userId = user[0].id
+
+        const ret = await request.post('/login')
+          .send({
+            email: 'test3@address.com',
+            password: '12345678'
+          });
+    
+        const token = ret._body.token
+
+        const address = {}
+
+        const response = await request.post('/addresses')
+            .send({ userId, address })
+            .set('Authorization', token)
+
+        expect(response.status).toBe(500)
     })
 })
