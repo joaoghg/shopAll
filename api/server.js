@@ -306,6 +306,10 @@ app.get("/orderDetails/:orderId", async (req, res) => {
   try{
     const orderId = req.params.orderId
 
+    if(!orderId){
+      return res.sendStatus(404)
+    }
+
     const order = await db('orders')
       .innerJoin('addresses', 'orders.addressId', 'addresses.id')
       .where('orders.id', orderId)
