@@ -118,6 +118,10 @@ app.post("/login", async (req, res) => {
   try{
     const {email, password} = req.body
 
+    if(!email || !password){
+      return res.sendStatus(404)
+    }
+
     const user = await db('users').where('email', email).first()
     if(!user){
       return res.status(401).json({message: "Credenciais inválidas"})
