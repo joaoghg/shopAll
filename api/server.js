@@ -234,6 +234,10 @@ app.post("/orders", (req, res) => {
     try{
       const { userId, cartItems, totalPrice, shippingAddress, paymentMethod } = req.body
 
+      if(!userId || !cartItems || !totalPrice || !shippingAddress || !paymentMethod){
+        return res.sendStatus(404)
+      }
+
       const user = await trx('users').where('id', userId).first()
       if(!user){
         return res.status(404).json({message: "Usuário não encontrado"})
@@ -262,8 +266,6 @@ app.post("/orders", (req, res) => {
         productId: item.id
       }))
 
-      console.log(products)
-
       await trx('order_products')
         .insert(products)
 
@@ -280,6 +282,10 @@ app.post("/orders", (req, res) => {
 app.get("/orders/:userId", async (req,res) => {
   try{
     const userId = req.params.userId
+
+    if(!userId){
+      return res.sendStatus(404)
+    }
 
     const user = await db('users').where('id', userId).first()
     if(!user){
