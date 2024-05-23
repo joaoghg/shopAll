@@ -150,7 +150,7 @@ app.get('/token/:token', (req, res) => {
 
     jwt.verify(token, req.secretKey ? req.secretKey : secretKey, (err, user) => {
       if (err) {
-        return res.status(403).json({ message: 'Token inválido' })
+        return res.status(403).json({ message: 'Token inválido', userId: user.id })
       }
     })
 
