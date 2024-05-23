@@ -186,11 +186,15 @@ app.delete("/addresses/:id", async (req, res) => {
   try{
     const { id } = req.params
 
+    if(!id){
+      return res.sendStatus(404)
+    }
+
     await db('addresses')
       .where('id', id)
       .del()
 
-    res.status(201).json({ message: "Endereço excluído" })
+    res.status(200).json({ message: "Endereço excluído" })
   }catch(error){
     if(error.sqlMessage.includes("foreign key")){
       res.status(500).json({ message: "Já existem pedidos com esse endereço" })

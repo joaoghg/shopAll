@@ -141,4 +141,74 @@ describe("addresses", () => {
 
         expect(response.status).toBe(500)
     })
+    it("Removendo endereço inválido", async () => {
+        const hashedPassword = await bcrypt.hash('12345678', 10);
+        await db('users')
+        .returning('id')
+        .insert({
+            name: 'Teste',
+            email: 'test4@address.com',
+            password: hashedPassword,
+            verificationToken: 'token'
+        });
+
+        const ret = await request.post('/login')
+          .send({
+            email: 'test4@address.com',
+            password: '12345678'
+          });
+    
+        const token = ret._body.token
+
+        const response = await request.delete('/addresses')
+            .set('Authorization', token)
+
+        expect(response.status).toBe(404)
+    })
+    it("Removendo endereço valido", async () => {
+        const hashedPassword = await bcrypt.hash('12345678', 10);
+        const user = await db('users')
+        .returning('id')
+        .insert({
+            name: 'Teste',
+            email: 'test5@address.com',
+            password: hashedPassword,
+            verificationToken: 'token'
+        });
+
+        const userId = user[0].id
+
+        const ret = await request.post('/login')
+          .send({
+            email: 'test5@address.com',
+            password: '12345678'
+          });
+    
+        const token = ret._body.token
+
+        const address = {
+            name : 'teste',
+            mobileNumber: '123456789',
+            houseNumber: null,
+            street: 'rua',
+            landmark: 'complemento',
+            cep: '17280000',
+            userId: userId,
+            city: 'cidade',
+            country: 'pais',
+            state: 'estado',
+            neighborhood: 'centro'
+        }
+
+        const add = await db('addresses')
+            .returning('id')
+            .insert(address)
+
+        const addressId = add[0].id
+
+        const response = await request.delete(`/addresses/${addressId}`)
+            .set('Authorization', token)
+
+        expect(response.status).toBe(200)
+    })
 })
