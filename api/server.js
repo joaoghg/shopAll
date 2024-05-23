@@ -145,7 +145,7 @@ app.get('/token/:token', (req, res) => {
     const token = req.params.token
 
     if(!token) {
-      res.status(401).json({ message: 'Token inválido' })
+      return res.status(401).json({ message: 'Token inválido' })
     }
 
     jwt.verify(token, secretKey, (err, user) => {
