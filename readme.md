@@ -11,3 +11,6 @@ Após fazer essas configurações, inicie a api rodando o comando npm start dent
 Agora é só iniciar o frontend, você precisará ter um emulador configurado no computador, ou então o aplicativo expo go baixado no seu celular. Com isso pronto, é só rodar o comando npx expo start na raiz do projeto, e então você terá a opção de abrir no emulador, ou ler o qrcode pelo aplicativo expo go no celular pra abrir direto nele.
 
 Para configurar as chamadas do frontend à api, vá no caminho src/contexts/Auth.js, e nesse arquivo modifique a variável server para o endereço da api. Para configurar a chamada do link enviado por email, vá no arquivo index.js e procure a função sendVerificationEmail. Lá, modifique o atributo text do objeto mailOptions, informando o endereço correto da api.
+
+
+Para executar os testes unitários, basta configurar o banco de dados no arquivo knexfile.js dentro da pasta api. Com o banco configurado, basta executar o comando npm run test dentro do diretório api.
