@@ -13,4 +13,4 @@ Agora é só iniciar o frontend, você precisará ter um emulador configurado no
 Para configurar as chamadas do frontend à api, vá no caminho src/contexts/Auth.js, e nesse arquivo modifique a variável server para o endereço da api. Para configurar a chamada do link enviado por email, vá no arquivo index.js e procure a função sendVerificationEmail. Lá, modifique o atributo text do objeto mailOptions, informando o endereço correto da api.
 
 
-Para executar os testes unitários, basta configurar o banco de dados no arquivo knexfile.js dentro da pasta api. Com o banco configurado, basta executar o comando npm run test dentro do diretório api.
+Para executar os testes unitários, basta configurar o banco de dados no arquivo knexfile.js dentro da pasta api, preenchendo o arquivo .env com a senha do usuário do banco de testes e com a chave secreta aleatório que será utilizada para gerar o token, seguindo o arquivo .env.example. Com tudo configurado, basta executar o comando npm run test dentro do diretório api.
