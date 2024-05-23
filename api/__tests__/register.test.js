@@ -9,7 +9,9 @@ beforeAll(async () => {
 
 })
 
+it('Testando registro válido', function (done) {
 
+});
 
 afterAll(async () => {
   await db.destroy();
