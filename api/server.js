@@ -347,6 +347,10 @@ app.get("/profile/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
 
+    if(!userId){
+      return res.sendStatus(404)
+    }
+
     const user = await db('users').where('id', userId).first()
     if(!user){
       return res.status(404).json({message: "Usuário não encontrado"})
