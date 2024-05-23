@@ -12,25 +12,25 @@ app.use((req, res, next) => {
     next()
 })
 
-describe("profile", () => {
+describe("categories", () => {
     it("sem token", async () => {
-        const response = await request.get('/profile')
+        const response = await request.get('/categories')
 
         expect(response.status).toBe(401)
     })
     it("token invalido", async () => {
-        const response = await request.get('/profile')
+        const response = await request.get('/categories')
             .set('Authorization', 'jkaksjaksjdksaskdjskal')
 
         expect(response.status).toBe(403)
     })
-    it("Buscando usuário válido", async () => {
+    it("Buscando categorias", async () => {
         const hashedPassword = await bcrypt.hash('12345678', 10);
         const user = await db('users')
         .returning('id')
         .insert({
             name: 'Teste',
-            email: 'test@profile.com',
+            email: 'test@categories.com',
             password: hashedPassword,
             verificationToken: 'token'
         });
@@ -39,39 +39,15 @@ describe("profile", () => {
 
         const ret = await request.post('/login')
           .send({
-            email: 'test@profile.com',
+            email: 'test@categories.com',
             password: '12345678'
           });
     
         const token = ret._body.token
 
-        const response = await request.get(`/profile/${userId}`)
+        const response = await request.get(`/categories`)
           .set('Authorization', token)
 
         expect(response.status).toBe(200)
-    })
-    it("Buscando usuário inválido", async () => {
-        const hashedPassword = await bcrypt.hash('12345678', 10);
-        await db('users')
-        .returning('id')
-        .insert({
-            name: 'Teste',
-            email: 'test2@profile.com',
-            password: hashedPassword,
-            verificationToken: 'token'
-        });
-
-        const ret = await request.post('/login')
-          .send({
-            email: 'test2@profile.com',
-            password: '12345678'
-          });
-    
-        const token = ret._body.token
-
-        const response = await request.get(`/profile`)
-          .set('Authorization', token)
-
-        expect(response.status).toBe(404)
     })
 })
