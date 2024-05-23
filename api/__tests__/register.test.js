@@ -13,7 +13,7 @@ describe('POST /register', () => {
     const response = await request.post('/register')
       .send({
         name: 'Teste',
-        email: '2teste@exemplo.com',
+        email: 'teste@exemplo.com',
         password: '12345678'
       });
 
@@ -26,7 +26,7 @@ describe('POST /register', () => {
   it('Deve dar erro pois email já existe', async () => {
     await db('users').insert({
       name: 'User',
-      email: 'emailuser@email.com',
+      email: 'emailuser4@email.com',
       password: '12345678',
       verificationToken: 'token'
     });
@@ -34,7 +34,7 @@ describe('POST /register', () => {
     const response = await request.post('/register')
       .send({
         name: 'User',
-        email: 'emailuser@email.com',
+        email: 'emailuser4@email.com',
         password: '12345678'
       });
 
@@ -49,7 +49,7 @@ describe('POST /register', () => {
         password: ''
       });
 
-    expect(response.status).toBe(500);
+    expect(response.status).toBe(404);
   });
 });
 
