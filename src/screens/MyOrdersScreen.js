@@ -80,6 +80,7 @@ export default function MyOrdersScreen({ navigation }){
                 borderColor: '#D0D0D0',
                 borderWidth: 1.5,
                 marginHorizontal: 20,
+                marginVertical: 10,
                 borderRadius: 10,
               }}
             >

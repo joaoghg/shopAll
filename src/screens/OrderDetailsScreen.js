@@ -25,7 +25,7 @@ export default function OrderDetailsScreen({ navigation, route }){
           Alert.alert("Erro", error.response.data.message)
         }
         else{
-          Alert.alert("Erro", "Não foi possível carregar o pedido")
+          Alert.alert("Erro", `Não foi possível carregar o pedido: ${error.toString()}`)
         }
       }
     }
@@ -120,7 +120,7 @@ export default function OrderDetailsScreen({ navigation, route }){
                 }}
               >
                 <Image
-                  source={{ uri: item.images.find(img => img.default == 1).path }}
+                  source={{ uri: item?.images?.find(img => img.default == 1)?.path }}
                   style={{
                     resizeMode: 'contain',
                     width: 100,
