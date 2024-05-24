@@ -1,0 +1,340 @@
+{
+	"info": {
+		"_postman_id": "66ecadab-3fa2-4798-9daa-e63c205c42c4",
+		"name": "shop_all",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25029591"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"João\",\r\n    \"email\": \"jherreiragarnica@gmail.com\",\r\n    \"password\": \"12345678\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{uri}}/register",
+					"host": [
+						"{{uri}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"jherreiragarnica@gmail.com\",\r\n    \"password\": \"07042004\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{uri}}/login",
+					"host": [
+						"{{uri}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "token",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{uri}}/token/{{token}}",
+					"host": [
+						"{{uri}}"
+					],
+					"path": [
+						"token",
+						"{{token}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addresses",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": {{userId}},\r\n    \"address\": {\r\n        \"name\": \"Casa\",\r\n        \"mobileNumber\": \"12345678\",\r\n        \"houseNumber\": \"12345678\",\r\n        \"street\": \"rua\",\r\n        \"landmark\": \"comlemento\",\r\n        \"cep\": \"cep\",\r\n        \"userId\": {{userId}},\r\n        \"city\": \"cidade\",\r\n        \"country\": \"pais\",\r\n        \"state\": \"estado\",\r\n        \"neighborhood\": \"bairro\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{uri}}/addresses",
+					"host": [
+						"{{uri}}"
+					],
+					"path": [
+						"addresses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addresses",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{uri}}/addresses/3",
+					"host": [
+						"{{uri}}"
+					],
+					"path": [
+						"addresses",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addresses",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{uri}}/addresses/{{userId}}",
+					"host": [
+						"{{uri}}"
+					],
+					"path": [
+						"addresses",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "orders",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": {{userId}},\r\n    \"cartItems\": [\r\n        {\r\n            \"productId\": 41,\r\n            \"name\": \"Teste\",\r\n            \"quantity\": 1,\r\n            \"price\": 5000\r\n        }\r\n    ],\r\n    \"totalPrice\": 5000,\r\n    \"paymentMethod\": \"cash\",\r\n    \"shippingAddress\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{uri}}/orders",
+					"host": [
+						"{{uri}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "products",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{uri}}/products",
+					"host": [
+						"{{uri}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "orders",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{uri}}/orders/{{userId}}",
+					"host": [
+						"{{uri}}"
+					],
+					"path": [
+						"orders",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OrderDetails",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{uri}}/orderDetails/3",
+					"host": [
+						"{{uri}}"
+					],
+					"path": [
+						"orderDetails",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profile",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{uri}}/profile/{{userId}}",
+					"host": [
+						"{{uri}}"
+					],
+					"path": [
+						"profile",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "categories",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{uri}}/categories",
+					"host": [
+						"{{uri}}"
+					],
+					"path": [
+						"categories"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxNjUwNTM5N30.aRyaYebVaEfIduohbQI2bU_Ec-8piH3bmby2hEeWrG8",
+			"type": "string"
+		},
+		{
+			"key": "uri",
+			"value": "https://shopall-fgr8.onrender.com",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "1",
+			"type": "string"
+		}
+	]
+}
