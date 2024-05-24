@@ -314,7 +314,10 @@ app.get("/orderDetails/:orderId", async (req, res) => {
       return res.sendStatus(404)
     }
 
-    const order = await db('orders')
+    const order = await db.select('orders.*', 'addresses.name', 'addresses.mobileNumber', 'addresses.houseNumber',
+      'addresses.street', 'addresses.landmark', 'addresses.city', 'addresses.country', 'addresses.cep', 'addresses.neighborhood',
+      'addresses.state')
+      .from('orders')
       .innerJoin('addresses', 'orders.addressId', 'addresses.id')
       .where('orders.id', orderId)
       .first()
