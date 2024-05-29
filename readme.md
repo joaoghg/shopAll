@@ -1,3 +1,5 @@
+Requisitos para rodar o projeto: nodeJS - https://nodejs.org/en/download/package-manager
+
 Para rodar o projeto, o primeiro passo é instalar as dependências do frontend e do backend.
 Para isso, rode o comando npm install no terminal, uma vez na raiz do projeto, para o frontend, e outra vez dentro da pasta api, para as dependências do backend.
 
